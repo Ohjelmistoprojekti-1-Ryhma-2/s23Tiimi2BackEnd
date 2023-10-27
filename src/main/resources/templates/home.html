@@ -4,17 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dogstore</title>
 </head>
 
 <body>
     <h2>Welcome to the site!</h2>
-    <div th:each="x : ${products}">
-        <h3 th:text="${x.product_type}"></h3>
-        <p th:text="${x.price}"></p>
-        <p th:text="${x.color}"></p>
-        <p th:text="${x.manufacturer}"></p>
-    </div>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Manufacturer</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.product_type}"></td>
+            <td th:text="${product.color}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.manufacturer}"></td>
+            <td><a th:href="@{/deleteproduct/{id}(id=${product.id})}">Delete</a></td>
+            <td><a th:href="@{/editproduct/{id}(id=${product.id})}">Edit</a></td>
+        </tr>
+    </table>
 </body>
 
 </html>
