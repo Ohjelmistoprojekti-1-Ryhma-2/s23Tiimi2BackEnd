@@ -9,6 +9,12 @@
 
 <body>
     <h2>Welcome to the site!</h2>
+    <div th:each="x : ${products}">
+        <h3 th:text="${x.product_type}"></h3>
+        <p th:text="${x.price}"></p>
+        <p th:text="${x.color}"></p>
+        <p th:text="${x.manufacturer}"></p>
+    </div>
 </body>
 
 </html>
