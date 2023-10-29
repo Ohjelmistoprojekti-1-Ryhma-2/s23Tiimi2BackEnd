@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Manufacturer Info</title>
+</head>
+<body>
+    <h2>Add a Manufacturer</h2>
+    <div>
+        <form th:object="${manufacturer}" th:action="@{/addmanufacturer}" method="post">
+            <label for="name">Name:</label><br>
+            <input type="text" id="type" th:field="*{name}" required/><br>
+            <label for="address">Address:</label><br>
+            <input type="text" id="address" th:field="*{address}"/><br>
+            <label for="continent">Continent:</label><br>
+            <input type="text" id="continent" th:field="*{continent}"/><br>
+            <label for="phone">Phone:</label><br>
+            <input type="text" id="phone" th:field="*{phone}"/><br>
+            <label for="email">E-mail:</label><br>
+            <input type="text" id="email" th:field="*{email}"/><br>
+            <button type="submit">Add Manufacturer</button>
+        </form>
+        <a href="/listmanufacturer">Back to Home</a>
+    </div>
+</body>
+</html>
