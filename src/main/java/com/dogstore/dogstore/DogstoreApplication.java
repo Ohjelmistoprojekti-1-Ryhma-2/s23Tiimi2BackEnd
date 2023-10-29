@@ -23,7 +23,8 @@ public class DogstoreApplication {
 	@Bean
 	public CommandLineRunner product_create(ProductRepository pRepository) {
 		return (args) -> {
-			pRepository.save(new Product("Ruoka", "Musta", 12.00, "Rukka"));
+			pRepository.save(new Product("Sadetakki", "Keltainen", "S", 39.99, "Rukka"));
+			pRepository.save(new Product("Talvitakki", "Musta", "XL", 64.99, "Feel Active"));
 		};
 	}
 
