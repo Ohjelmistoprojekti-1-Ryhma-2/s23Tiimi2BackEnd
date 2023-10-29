@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -43,6 +44,19 @@ public class ProductController {
         model.addAttribute("product", productRepository.findById(id));
         productRepository.deleteById(id);
         return "redirect:/home"; // Redirect to endpoint /home.html
+    }
+
+// Retrieving a product by its ID for removing
+    @GetMapping("/addproduct")
+    public String addProductForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "addproduct";
+    }
+
+    @PostMapping("/addproduct")
+    public String addProduct(@ModelAttribute Product product) {
+        productRepository.save(product);
+        return "redirect:/home";
     }
 
 }
