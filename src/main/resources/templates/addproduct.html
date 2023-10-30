@@ -16,9 +16,14 @@
             <label for="size">Size:</label><br>
             <input type="text" id="size" th:field="*{size}" required/><br>
             <label for="price">Price:</label><br>
-            <input type="number" id="price" th:field="*{price}" min="0" required/><br>
-            <label for="manufacturer">Manufacturer:</label><br>
-            <input type="text" id="manufacturer" th:field="*{manufacturer}" required/><br>
+            <input type="number" id="price" th:field="*{price}" min="0" step="0.01" required/><br>
+            <label for="manufacturer">Manufacturer :</label><br>
+            <select th:field="*{manufacturer.id}" required>
+                <option value="Select manufacturer"></option>
+                <option th:each="manufacturer: ${manufacturers}" 
+                    th:value="${manufacturer.id}"
+                    th:text="${manufacturer.name}"></option>
+            </select> <br>
             <button type="submit">Add Product</button>
         </form>
         <a href="/home">Back to Home</a>

@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Product {
@@ -17,13 +19,16 @@ public class Product {
 	private String color;
 	private String size;
 	private double price;
-	private String manufacturer;
+
+	@ManyToOne
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
 	public Product() {
 
 	}
 
-	public Product(String product_type, String color, String size, double price, String manufacturer) {
+	public Product(String product_type, String color, String size, double price, Manufacturer manufacturer) {
 		this.product_type = product_type;
 		this.color = color;
 		this.size = size;
@@ -103,17 +108,11 @@ public class Product {
 		this.price = price;
 	}
 
-	/**
-	 * @return String return the manufacturer
-	 */
-	public String getManufacturer() {
+	public Manufacturer getManufacturer() {
 		return manufacturer;
 	}
 
-	/**
-	 * @param manufacturer the manufacturer to set
-	 */
-	public void setManufacturer(String manufacturer) {
+	public void setManufacturer(Manufacturer manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
