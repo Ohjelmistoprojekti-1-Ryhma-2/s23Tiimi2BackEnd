@@ -22,8 +22,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void testSaveProduct() {
-        Manufacturer manufacturer = new Manufacturer("Rukka", "Address", "Europe", "123456789", "email@email.com");
-        Product product = new Product("Dog Food", "black", "S", 30, manufacturer.getName());
+        Product product = new Product();
         productRepository.save(product);
         assertNotNull(product.getId());
     }
