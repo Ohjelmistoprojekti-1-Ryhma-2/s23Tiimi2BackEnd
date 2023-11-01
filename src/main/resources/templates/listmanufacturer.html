@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Manufacturers info</title>
+    <meta charset="UTF-8">
+    <title>Manufacturers info</title>
 </head>
+
 <body>
-<h2> List of manufactures contact info</h2>
-	<table>
-<tr>
-	<th>Manufacturer</th>
-    <th>Address</th>
-    <th>Continent</th>
-    <th>Phone</th>
-    <th>Email</th>
-</tr>
-<tr th:each="manufacturer : ${manufacturers}">
-    <td style='width:auto'th:text="${manufacturer.name}"></td>
-    <td style='width:auto' th:text="${manufacturer.address}"></td>
-    <td style='width:auto'th:text="${manufacturer.continent}"></td>
-    <td sstyle='width:auto'th:text="${manufacturer.phone}"></td>
-    <td style='width:auto' th:text="${manufacturer.email}"></td>
-</tr>
-</table>
-<a href="/addmanufacturer" class="btn">Add manufacturer</a>
-<a href="/home" class="btn btn-primary">Return to home page</a>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h2> List of manufactures contact info</h2>
+    <table>
+        <tr>
+            <th>Manufacturer</th>
+            <th>Address</th>
+            <th>Continent</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+        <tr th:each="manufacturer : ${manufacturers}">
+            <td style='width:auto' th:text="${manufacturer.name}"></td>
+            <td style='width:auto' th:text="${manufacturer.address}"></td>
+            <td style='width:auto' th:text="${manufacturer.continent}"></td>
+            <td sstyle='width:auto' th:text="${manufacturer.phone}"></td>
+            <td style='width:auto' th:text="${manufacturer.email}"></td>
+        </tr>
+    </table>
+    <a href="/addmanufacturer" class="btn">Add manufacturer</a>
+    <a href="/home" class="btn btn-primary">Return to home page</a>
 </body>
+
 </html>

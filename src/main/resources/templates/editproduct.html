@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    <header th:insert="blocks/navbar :: navbar"></header>
     <h2>Edit product</h2>
     <div>
         <form th:object="${product}" th:action="@{/saveproduct}" action="#" method="post">
