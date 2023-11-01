@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.models.Product;
@@ -15,25 +16,27 @@ public class DogstoreApplication {
 
 	// private static final Logger log =
 	// LoggerFactory.getLogger(DogstoreApplication.class);
+	private final ManufacturerRepository manufacturerRepository;
+    private final ProductRepository productRepository;
+
+	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository) {
+        this.manufacturerRepository = manufacturerRepository;
+        this.productRepository = productRepository;
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(DogstoreApplication.class, args);
 	}
 
 	@Bean
-	public CommandLineRunner product_create(ProductRepository pRepository) {
+	@Transactional
+	public CommandLineRunner initData() {
 		return (args) -> {
-			pRepository.save(new Product("Sadetakki", "Keltainen", "S", 39.99, "Rukka"));
-			pRepository.save(new Product("Talvitakki", "Musta", "XL", 64.99, "Feel Active"));
-		};
-	}
+			Manufacturer rukka = new Manufacturer("Rukka", "Suomusjarvi 99, Finland", "EU", "+358 559 A 000", "rukka@ltd.fi");
+			rukka = manufacturerRepository.save(rukka);
 
-	@Bean
-	public CommandLineRunner manufacturer_create(ManufacturerRepository mRepository) {
-		return (args) -> {
-			mRepository
-					.save(new Manufacturer("Rukka", "Suomusjarvi 99, Finland", "EU", "+358 559 A 000", "rukka@ltd.fi"));
-		};
-	}
-
+			productRepository.save(new Product("Sadetakki", "Keltainen", "S", 39.99, rukka));
+			productRepository.save(new Product("Talvitakki", "Musta", "XL", 64.99, rukka));
+	};
+}
 }

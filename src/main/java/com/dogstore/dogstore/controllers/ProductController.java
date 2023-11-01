@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.models.Product;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
@@ -57,6 +56,7 @@ public class ProductController {
 	@GetMapping("/addproduct")
 	public String addProductForm(Model model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "addproduct";
 	}
 
@@ -67,28 +67,5 @@ public class ProductController {
 	public String addProduct(@ModelAttribute Product product) {
 		productRepository.save(product);
 		return "redirect:/home";
-	}
-
-	// Redirects to list of manufacturers page.
-	@GetMapping("/listmanufacturer")
-	public String listOfManufacturers(Model model) {
-		model.addAttribute("manufacturers", manufacturerRepository.findAll());
-		return "listmanufacturer"; // Moves to endpoint /listmanufacturer.html.
-	}
-
-	// Move to /addmanufacturer -endpoint,
-	// which has a form for the new manufacturer.
-	@GetMapping("/addmanufacturer")
-	public String addManufacturerForm(Model model) {
-		model.addAttribute("manufacturer", new Manufacturer());
-		return "addmanufacturer";
-	}
-
-	// Add and save the new manufacturer's contact info.
-	// Moves back to /listmanufacturer -endpoint.
-	@PostMapping("/addmanufacturer")
-	public String addProduct(@ModelAttribute Manufacturer manufacturer) {
-		manufacturerRepository.save(manufacturer);
-		return "redirect:/listmanufacturer";
 	}
 }

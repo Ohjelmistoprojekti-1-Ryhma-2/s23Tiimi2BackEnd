@@ -22,7 +22,7 @@
             <td th:text="${product.color}"></td>
             <td th:text="${product.size}"></td>
             <td th:text="${product.price}"></td>
-            <td th:text="${product.manufacturer}"></td>
+            <td th:text="${product.manufacturer.name}"></td>
             <td><a th:href="@{/deleteproduct/{id}(id=${product.id})}">Delete</a></td>
             <td><a th:href="@{/editproduct/{id}(id=${product.id})}">Edit</a></td>
         </tr>
