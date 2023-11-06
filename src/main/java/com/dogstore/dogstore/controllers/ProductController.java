@@ -21,17 +21,18 @@ public class ProductController {
 	@Autowired
 	ManufacturerRepository manufacturerRepository;
 
-	// Main page and listing of all products
-	@GetMapping("/home")
+	// Listing of all products
+	@GetMapping("/listproducts")
 	public String home(Model model) {
 		model.addAttribute("products", productRepository.findAll());
-		return "home"; // home.html
+		return "listproducts"; // listproducts.html
 	}
 
 	// Retrieving a product by its ID for editing in the editproduct.html endpoint
 	@GetMapping("/editproduct/{id}")
 	public String editProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productRepository.findById(id));
+		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "editproduct"; // editproduct.html
 	}
 
@@ -39,7 +40,7 @@ public class ProductController {
 	@PostMapping("/saveproduct")
 	public String saveProduct(Product product) {
 		productRepository.save(product);
-		return "redirect:/home"; // Redirect to endpoint /home.html
+		return "redirect:/listproducts"; // Redirect to endpoint /listproducts.html
 	}
 
 	// Retrieving a product by its ID for removing
@@ -47,10 +48,10 @@ public class ProductController {
 	public String deleteProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productRepository.findById(id));
 		productRepository.deleteById(id);
-		return "redirect:/home"; // Redirect to endpoint /home.html
+		return "redirect:/listproducts"; // Redirect to endpoint /listproducts.html
 	}
 
-	// Move to /addpoint -endpoint,
+	// Move to /addproduct -endpoint,
 	// which has a form for the new product.
 
 	@GetMapping("/addproduct")
@@ -61,11 +62,11 @@ public class ProductController {
 	}
 
 	// Add and save the new product.
-	// Moves back to /home -endpoint.
+	// Moves back to /listproducts -endpoint.
 
 	@PostMapping("/addproduct")
 	public String addProduct(@ModelAttribute Product product) {
 		productRepository.save(product);
-		return "redirect:/home";
+		return "redirect:/listproducts";
 	}
 }

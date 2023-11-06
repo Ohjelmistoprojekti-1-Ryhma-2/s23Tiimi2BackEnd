@@ -12,15 +12,15 @@ import com.dogstore.dogstore.repository.ManufacturerRepository;
 
 @Controller
 public class ManufacturerController {
-  
-    @Autowired
-    private ManufacturerRepository manufacturerRepository;
+
+	@Autowired
+	private ManufacturerRepository manufacturerRepository;
 
 	// Redirects to list of manufacturers page.
-	@GetMapping("/listmanufacturer")
+	@GetMapping("/listmanufacturers")
 	public String listOfManufacturers(Model model) {
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
-		return "listmanufacturer"; // Moves to endpoint /listmanufacturer.html.
+		return "listmanufacturers"; // Moves to endpoint /listmanufacturers.html.
 	}
 
 	// Move to /addmanufacturer -endpoint,
@@ -36,6 +36,6 @@ public class ManufacturerController {
 	@PostMapping("/addmanufacturer")
 	public String addProduct(@ModelAttribute Manufacturer manufacturer) {
 		manufacturerRepository.save(manufacturer);
-		return "redirect:/listmanufacturer";
+		return "redirect:/listmanufacturers";
 	}
 }
