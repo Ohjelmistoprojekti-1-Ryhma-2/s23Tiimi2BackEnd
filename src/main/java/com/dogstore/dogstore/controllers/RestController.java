@@ -23,4 +23,29 @@ public class RestController {
         return (List<Product>) productRepository.findAll();
     }
 
+    // REST PUT
+    @RequestMapping(value = "/editproducts", method = RequestMethod.PUT)
+    public @ResponseBody Product saveProductRest(Product product) {
+        return productRepository.save(product);
+    }
+
+    // REST DELETE
+    @RequestMapping(value = "/deleteproducts", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteProductRest(Long id) {
+        productRepository.deleteById(id);
+        return "Deleted";
+    }
+
+    // REST POST
+    @RequestMapping(value = "/addproducts", method = RequestMethod.POST)
+    public @ResponseBody Product addProductRest(Product product) {
+        return productRepository.save(product);
+    }
+
+    // REST GET
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    public @ResponseBody Product findProductRest(Long id) {
+        return productRepository.findById(id).get();
+    }
+
 }

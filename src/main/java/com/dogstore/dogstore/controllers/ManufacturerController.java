@@ -12,9 +12,9 @@ import com.dogstore.dogstore.repository.ManufacturerRepository;
 
 @Controller
 public class ManufacturerController {
-  
-    @Autowired
-    private ManufacturerRepository manufacturerRepository;
+
+	@Autowired
+	private ManufacturerRepository manufacturerRepository;
 
 	// Redirects to list of manufacturers page.
 	@GetMapping("/listmanufacturer")
