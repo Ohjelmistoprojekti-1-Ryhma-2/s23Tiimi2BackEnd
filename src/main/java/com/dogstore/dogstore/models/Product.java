@@ -15,21 +15,21 @@ public class Product {
 	private Long id;
 
 	// Other parameters
-	private String product_type;
+	private String type;
 	private String color;
 	private String size;
 	private double price;
 
 	@ManyToOne
-    @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturer;
+	@JoinColumn(name = "manufacturer_id")
+	private Manufacturer manufacturer;
 
 	public Product() {
 
 	}
 
-	public Product(String product_type, String color, String size, double price, Manufacturer manufacturer) {
-		this.product_type = product_type;
+	public Product(String type, String color, String size, double price, Manufacturer manufacturer) {
+		this.type = type;
 		this.color = color;
 		this.size = size;
 		this.price = price;
@@ -51,17 +51,17 @@ public class Product {
 	}
 
 	/**
-	 * @return String return the product_type
+	 * @return String return the type
 	 */
-	public String getProduct_type() {
-		return product_type;
+	public String getType() {
+		return type;
 	}
 
 	/**
-	 * @param product_type the product_type to set
+	 * @param type the product_type to set
 	 */
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/**
