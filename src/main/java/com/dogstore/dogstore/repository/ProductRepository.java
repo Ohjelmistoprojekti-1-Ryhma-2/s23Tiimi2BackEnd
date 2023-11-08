@@ -1,10 +1,14 @@
 package com.dogstore.dogstore.repository;
 
-import org.springframework.data.repository.CrudRepository;
-
-import com.dogstore.dogstore.models.Product;
 import java.util.List;
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import com.dogstore.dogstore.models.Product;
+
+@RepositoryRestResource
+public interface ProductRepository extends CrudRepository<Product, Long> {
+    List<Product> findByType(@Param("type") String type);
 }

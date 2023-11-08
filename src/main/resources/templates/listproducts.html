@@ -19,7 +19,7 @@
             <th>Manufacturer</th>
         </tr>
         <tr th:each="product : ${products}">
-            <td th:text="${product.product_type}"></td>
+            <td th:text="${product.type}"></td>
             <td th:text="${product.color}"></td>
             <td th:text="${product.size}"></td>
             <td th:text="${product.price}"></td>

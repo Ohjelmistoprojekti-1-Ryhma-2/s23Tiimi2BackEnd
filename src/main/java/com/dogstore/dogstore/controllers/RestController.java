@@ -28,14 +28,9 @@ public class RestController {
     public @ResponseBody List<Product> productsListRest() {
         return (List<Product>) productRepository.findAll();
     }
-    /*
-     * TODO REST Products by product type interface
-     * 
-     * @RequestMapping(value = "/products/jacket", method = RequestMethod.GET)
-     * public @ResponseBody List<Product> getJacketProducts() {
-     * return (List<Product>) productRepository.find;
-     * }
-     */
+
+    // REST type search example:
+    // http://localhost:8080/products/search/findByType?type=Talvitakki
 
     // REST Manufacturer interface
     @RequestMapping(value = "/manufacturer", method = RequestMethod.GET)
