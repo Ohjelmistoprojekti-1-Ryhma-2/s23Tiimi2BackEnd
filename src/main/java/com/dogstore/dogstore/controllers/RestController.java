@@ -30,7 +30,7 @@ public class RestController {
     }
 
     // REST type search example:
-    // http://localhost:8080/products/search/findByType?type=Talvitakki
+    // http://localhost:8080/api/products/search/findByType?type=Sadetakki
 
     // REST Manufacturer interface
     @RequestMapping(value = "/manufacturer", method = RequestMethod.GET)
