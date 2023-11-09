@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dogstore.dogstore.models.Manufacturer;
@@ -37,5 +38,14 @@ public class ManufacturerController {
 	public String addProduct(@ModelAttribute Manufacturer manufacturer) {
 		manufacturerRepository.save(manufacturer);
 		return "redirect:/listmanufacturers";
+	}
+
+	// Retrieving a manufacturer by its ID in order delete it from list of
+	// manufacturers.
+	@GetMapping("/deletemanufacturer/{id}")
+	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("manufacturer", manufacturerRepository.findById(id));
+		manufacturerRepository.deleteById(id);
+		return "redirect:/listmanufacturers"; // Redirect to endpoint /listmanufacturers.html
 	}
 }

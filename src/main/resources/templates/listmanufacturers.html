@@ -23,6 +23,7 @@
             <td style='width:auto' th:text="${manufacturer.continent}"></td>
             <td sstyle='width:auto' th:text="${manufacturer.phone}"></td>
             <td style='width:auto' th:text="${manufacturer.email}"></td>
+            <td><a th:href="@{/deletemanufacturer/{id}(id=${manufacturer.id})}">Delete</a></td>
         </tr>
     </table>
     <a href="/addmanufacturer" class="btn btn-primary">Add Manufacturer</a><br>
