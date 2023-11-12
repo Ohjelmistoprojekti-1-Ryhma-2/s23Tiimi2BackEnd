@@ -14,7 +14,7 @@
         <form th:object="${product}" th:action="@{/saveproduct}" action="#" method="post">
             <input type="hidden" id="id" th:field="*{id}" /><br>
             <label for="type">Type:</label><br>
-            <input type="text" id="type" th:field="*{product_type}" required /><br>
+            <input type="text" id="type" th:field="*{type}" required /><br>
             <label for="color">Color:</label><br>
             <input type="text" id="color" th:field="*{color}" required /><br>
             <label for="size">Size:</label><br>
