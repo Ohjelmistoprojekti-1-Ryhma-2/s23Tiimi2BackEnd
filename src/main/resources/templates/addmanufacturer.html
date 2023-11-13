@@ -5,23 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Manufacturer Info</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
     <header th:insert="blocks/navbar :: navbar"></header>
     <h2>Add a Manufacturer</h2>
     <div>
-        <form th:object="${manufacturer}" th:action="@{/addmanufacturer}" method="post">
+        <form th:object="${manufacturer}" class="form-input" th:action="@{/addmanufacturer}" method="post">
             <label for="name">Name:</label><br>
-            <input type="text" id="type" th:field="*{name}" required /><br>
+            <input type="text" id="name" th:field="*{name}" />
+            <p th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{name}"></p><br>
+            
             <label for="address">Address:</label><br>
-            <input type="text" id="address" th:field="*{address}" /><br>
+            <input type="text" id="address" th:field="*{address}" />
+            <p th:if="${#fields.hasErrors('address')}" class="error-message" th:errors="*{address}"></p><br>
+            
             <label for="continent">Continent:</label><br>
-            <input type="text" id="continent" th:field="*{continent}" /><br>
+            <input type="text" id="continent" th:field="*{continent}" />
+            <p th:if="${#fields.hasErrors('continent')}" class="error-message" th:errors="*{continent}"></p><br>
+            
             <label for="phone">Phone:</label><br>
-            <input type="text" id="phone" th:field="*{phone}" /><br>
+            <input type="text" id="phone" th:field="*{phone}" />
+            <p th:if="${#fields.hasErrors('phone')}" class="error-message" th:errors="*{phone}"></p><br>
+            
             <label for="email">E-mail:</label><br>
-            <input type="text" id="email" th:field="*{email}" /><br>
+            <input type="text" id="email" th:field="*{email}" />
+            <p th:if="${#fields.hasErrors('email')}" class="error-message" th:errors="*{email}"></p><br>
+            
             <button type="submit">Add Manufacturer</button>
         </form>
         <a href="/listmanufacturers">Back to Manufacturers</a><br>

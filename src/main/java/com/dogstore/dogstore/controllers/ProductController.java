@@ -3,6 +3,7 @@ package com.dogstore.dogstore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.dogstore.dogstore.models.Product;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ProductController {
@@ -38,10 +41,14 @@ public class ProductController {
 
 	// Saving the retrieved and edited product into the repository.
 	@PostMapping("/saveproduct")
-	public String saveProduct(Product product) {
-		productRepository.save(product);
-		return "redirect:/listproducts"; // Redirect to endpoint /listproducts.html
-	}
+    public String saveProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("manufacturers", manufacturerRepository.findAll());
+            return "editproduct"; // Stay on the form page and display errors
+        }
+        productRepository.save(product);
+        return "redirect:/listproducts";
+    }
 
 	// Retrieving a product by its ID for removing
 	@GetMapping("/deleteproduct/{id}")
@@ -65,7 +72,11 @@ public class ProductController {
 	// Moves back to /listproducts -endpoint.
 
 	@PostMapping("/addproduct")
-	public String addProduct(@ModelAttribute Product product) {
+	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("manufacturers", manufacturerRepository.findAll());
+			return "addproduct"; 
+		}
 		productRepository.save(product);
 		return "redirect:/listproducts";
 	}

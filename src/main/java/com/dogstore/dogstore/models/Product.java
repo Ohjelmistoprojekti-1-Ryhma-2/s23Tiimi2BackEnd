@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -15,9 +17,16 @@ public class Product {
 	private Long id;
 
 	// Other parameters
-	private String type;
+	@NotBlank(message = "Type is mandatory")
+    private String type;
+
+	@NotBlank(message = "Color is mandatory")
 	private String color;
+
+	@NotBlank(message = "Size is mandatory")
 	private String size;
+
+	@NotNull(message = "Price is mandatory")
 	private double price;
 
 	@ManyToOne
