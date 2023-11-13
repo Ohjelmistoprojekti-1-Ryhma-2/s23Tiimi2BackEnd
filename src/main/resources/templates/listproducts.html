@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dogstore</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-    <h2>Welcome to the site!</h2>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h2>List all products</h2>
     <table>
         <tr>
             <th>Type</th>
@@ -18,7 +20,7 @@
             <th>Manufacturer</th>
         </tr>
         <tr th:each="product : ${products}">
-            <td th:text="${product.product_type}"></td>
+            <td th:text="${product.type}"></td>
             <td th:text="${product.color}"></td>
             <td th:text="${product.size}"></td>
             <td th:text="${product.price}"></td>
@@ -27,10 +29,9 @@
             <td><a th:href="@{/editproduct/{id}(id=${product.id})}">Edit</a></td>
         </tr>
     </table>
-    <a href="/addproduct" class="btn btn-primary">Add Product</a>
-    
-    <a href="/listmanufacturer" class="btn">List of manufacturers</a>
-
+    <a href="/addproduct" class="btn btn-primary">Add Product</a><br>
+    <a href="/listmanufacturers" class="btn btn-primary">Manufacturers</a><br>
+    <a href="/home" class="btn btn-primary">Back to Home</a>
 </body>
 
 </html>

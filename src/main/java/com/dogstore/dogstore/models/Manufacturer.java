@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 //This entity is for informative list of many manufacturers.
 //Manufacturers' company information is for ordering products
@@ -18,15 +21,25 @@ public class Manufacturer {
 	private Long id;
 
 	// Essential informative parameters about manufactures
+	@NotBlank(message = "Name is mandatory")
+    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
 	private String name;
+
+	@NotBlank(message = "Address is mandatory")
 	private String address;
-	private String continent;
+	
+    @NotBlank(message = "Continent is mandatory")
+    private String continent;
+
+	@NotBlank(message = "Phone is mandatory")
 	private String phone;
-	private String email;
+
+	@NotBlank(message = "Email is mandatory")
+    @Email(message = "Invalid email address")
+    private String email;
 
 	public Manufacturer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Manufacturer(String name, String address, String continent, String phone, String email) {

@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -15,21 +17,28 @@ public class Product {
 	private Long id;
 
 	// Other parameters
-	private String product_type;
+	@NotBlank(message = "Type is mandatory")
+    private String type;
+
+	@NotBlank(message = "Color is mandatory")
 	private String color;
+
+	@NotBlank(message = "Size is mandatory")
 	private String size;
+
+	@NotNull(message = "Price is mandatory")
 	private double price;
 
 	@ManyToOne
-    @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturer;
+	@JoinColumn(name = "manufacturer_id")
+	private Manufacturer manufacturer;
 
 	public Product() {
 
 	}
 
-	public Product(String product_type, String color, String size, double price, Manufacturer manufacturer) {
-		this.product_type = product_type;
+	public Product(String type, String color, String size, double price, Manufacturer manufacturer) {
+		this.type = type;
 		this.color = color;
 		this.size = size;
 		this.price = price;
@@ -51,17 +60,17 @@ public class Product {
 	}
 
 	/**
-	 * @return String return the product_type
+	 * @return String return the type
 	 */
-	public String getProduct_type() {
-		return product_type;
+	public String getType() {
+		return type;
 	}
 
 	/**
-	 * @param product_type the product_type to set
+	 * @param type the product_type to set
 	 */
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/**

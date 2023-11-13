@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogstore</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h2> List of manufactures contact info</h2>
+    <table>
+        <tr>
+            <th>Manufacturer</th>
+            <th>Address</th>
+            <th>Continent</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+        <tr th:each="manufacturer : ${manufacturers}">
+            <td style='width:auto' th:text="${manufacturer.name}"></td>
+            <td style='width:auto' th:text="${manufacturer.address}"></td>
+            <td style='width:auto' th:text="${manufacturer.continent}"></td>
+            <td sstyle='width:auto' th:text="${manufacturer.phone}"></td>
+            <td style='width:auto' th:text="${manufacturer.email}"></td>
+            <td><a th:href="@{/deletemanufacturer/{id}(id=${manufacturer.id})}">Delete</a></td>
+        </tr>
+    </table>
+    <a href="/addmanufacturer" class="btn btn-primary">Add Manufacturer</a><br>
+    <a href="/listproducts" class="btn btn-primary">Products</a><br>
+    <a href="/index" class="btn btn-primary">Back to Home</a>
+</body>
+
+</html>

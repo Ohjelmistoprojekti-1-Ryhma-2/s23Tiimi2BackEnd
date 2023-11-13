@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogstore</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h1>Welcome to the site!</h2>
+
+        <h2>Choose from the following options:</h2>
+
+        <a href="/addproduct" class="btn btn-primary">Add Product</a><br>
+
+        <a href="/listproducts" class="btn btn-primary">List all products</a><br>
+
+        <a href="/listmanufacturers" class="btn btn-primary">List all manufacturers</a>
+
+</body>
+
+</html>
