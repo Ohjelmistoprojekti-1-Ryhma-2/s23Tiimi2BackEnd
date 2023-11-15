@@ -13,7 +13,11 @@
     <h2>Add a New Product</h2>
     <div>
         <form th:object="${product}" class="form-input" th:action="@{/addproduct}" method="post">
-            <label for="type">Type:</label><br>
+        	<label for="name">Name:</label><br>
+        	<input type="text" id="name" th:field="*{name}" />
+        	<p th:if="${#fields.hasErrors('type')}" class="error-message" th:errors="*{type}">Type Error</p><br>
+        
+        	<label for="type">Type:</label><br>
             <input type="text" id="type" th:field="*{type}" />
             <p th:if="${#fields.hasErrors('type')}" class="error-message" th:errors="*{type}">Type Error</p><br>
             
