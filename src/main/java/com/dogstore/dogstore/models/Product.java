@@ -26,11 +26,11 @@ public class Product {
 
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
-	@NotBlank(message = "Name is mandatory!")
+	@NotBlank(message = "Type is mandatory!")
 	private String type;
-	@NotBlank(message = "Name is mandatory!")
+	@NotBlank(message = "Color is mandatory!")
 	private String color;
-	@NotBlank(message = "Name is mandatory!")
+	@NotBlank(message = "Size is mandatory!")
 	private String size;
 	@NotNull(message = "Price is mandatory!")
 	private double price;
