@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Product {
@@ -21,10 +22,14 @@ public class Product {
 	// If clothes, then there are also three additional types: S, M or L.
 
 	// Values are written in Finnish.
+
+	@NotBlank(message = "Name is mandatory!")
 	private String name;
+
 	private String type;
 	private String color;
 	private String size;
+	@NotBlank(message = "Price is mandatory!")
 	private double price;
 
 	@ManyToOne(fetch = FetchType.LAZY) // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
