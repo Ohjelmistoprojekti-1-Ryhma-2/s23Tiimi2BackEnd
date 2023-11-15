@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
+import com.dogstore.dogstore.repository.ProductRepository;
 
 @Controller
 public class ManufacturerController {
 
 	@Autowired
 	private ManufacturerRepository manufacturerRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
 	// Redirects to list of manufacturers page.
 	@GetMapping("/listmanufacturers")
@@ -40,12 +43,21 @@ public class ManufacturerController {
 		return "redirect:/listmanufacturers";
 	}
 
-	// Retrieving a manufacturer by its ID in order delete it from list of
-	// manufacturers.
+	/*
+	 * // Retrieving a manufacturer by its ID in order delete it from list of //
+	 * manufacturers.
+	 * 
+	 * @GetMapping("/deletemanufacturer/{id}") public String
+	 * deleteManufacturer(@PathVariable("id") Long id, Model model) {
+	 * model.addAttribute("manufacturer", manufacturerRepository.findById(id));
+	 * manufacturerRepository.deleteById(id); return "redirect:/listmanufacturers";
+	 * // Redirect to endpoint /listmanufacturers.html }
+	 */
+
 	@GetMapping("/deletemanufacturer/{id}")
 	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("manufacturer", manufacturerRepository.findById(id));
 		manufacturerRepository.deleteById(id);
-		return "redirect:/listmanufacturers"; // Redirect to endpoint /listmanufacturers.html
+		return "redirect:/listmanufacturers";
 	}
 }
