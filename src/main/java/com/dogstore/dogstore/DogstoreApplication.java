@@ -17,12 +17,12 @@ public class DogstoreApplication {
 	// private static final Logger log =
 	// LoggerFactory.getLogger(DogstoreApplication.class);
 	private final ManufacturerRepository manufacturerRepository;
-    private final ProductRepository productRepository;
+	private final ProductRepository productRepository;
 
 	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository) {
-        this.manufacturerRepository = manufacturerRepository;
-        this.productRepository = productRepository;
-    }
+		this.manufacturerRepository = manufacturerRepository;
+		this.productRepository = productRepository;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DogstoreApplication.class, args);
@@ -32,11 +32,22 @@ public class DogstoreApplication {
 	@Transactional
 	public CommandLineRunner initData() {
 		return (args) -> {
-			Manufacturer rukka = new Manufacturer("Rukka", "Suomusjarvi 99, Finland", "EU", "+358 559 A 000", "rukka@ltd.fi");
+			Manufacturer rukka = new Manufacturer("Rukka", "Suomusjarvi 99, Finland", "EU", "+358 559 A 000",
+					"rukka@ltd.fi");
 			rukka = manufacturerRepository.save(rukka);
+			Manufacturer purenatural = new Manufacturer("Purenatural", "Oulunsalo A -9, Finland", "EU",
+					"+358 888 B 000", "purenatural@ltd.fi");
+			purenatural = manufacturerRepository.save(purenatural);
+			Manufacturer littlebigger = new Manufacturer("Little & Bigger", " Zenchu street, China", "AS",
+					"+86 AAA BBB CCC", "littlebigger@gmail.com");
+			littlebigger = manufacturerRepository.save(littlebigger);
 
-			productRepository.save(new Product("Sadetakki", "Keltainen", "S", 39.99, rukka));
-			productRepository.save(new Product("Talvitakki", "Musta", "XL", 64.99, rukka));
-	};
-}
+			productRepository.save(new Product("Sadetakki", "Vaate", "Keltainen", "S", 39.99, rukka));
+			productRepository.save(new Product("Talvitakki", "Vaate", "Musta", "XL", 64.99, rukka));
+			productRepository.save(new Product("Broilerin fileelastu", "Ruoka", "Keltaruskea", "-", 6.99, purenatural));
+			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla", "Lelu",
+					"Siitrunakeltainen & Jännävioletti", "-", 7.99, littlebigger));
+
+		};
+	}
 }

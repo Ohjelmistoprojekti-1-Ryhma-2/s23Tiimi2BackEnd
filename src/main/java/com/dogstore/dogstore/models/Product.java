@@ -1,6 +1,7 @@
 package com.dogstore.dogstore.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,12 +16,19 @@ public class Product {
 	private Long id;
 
 	// Other parameters
+
+	// Note that values for type are three: clothes, food or toy.
+	// If clothes, then there are also three additional types: S, M or L.
+
+	// Values are written in Finnish.
+	private String name;
 	private String type;
 	private String color;
 	private String size;
 	private double price;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY) // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
+										// Boot 2 and React - Second Edition", Chapter 'Relationships between tables'
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
 
@@ -28,7 +36,8 @@ public class Product {
 
 	}
 
-	public Product(String type, String color, String size, double price, Manufacturer manufacturer) {
+	public Product(String name, String type, String color, String size, double price, Manufacturer manufacturer) {
+		this.name = name;
 		this.type = type;
 		this.color = color;
 		this.size = size;
@@ -48,6 +57,20 @@ public class Product {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
