@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Product {
@@ -25,11 +26,13 @@ public class Product {
 
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
-
+	@NotBlank(message = "Name is mandatory!")
 	private String type;
+	@NotBlank(message = "Name is mandatory!")
 	private String color;
+	@NotBlank(message = "Name is mandatory!")
 	private String size;
-	@NotBlank(message = "Price is mandatory!")
+	@NotNull(message = "Price is mandatory!")
 	private double price;
 
 	@ManyToOne(fetch = FetchType.LAZY) // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
