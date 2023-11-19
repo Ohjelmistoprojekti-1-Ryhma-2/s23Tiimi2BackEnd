@@ -1,9 +1,13 @@
 package com.dogstore.dogstore.models;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -37,6 +41,13 @@ public class Manufacturer {
 	@NotBlank(message = "Email is mandatory")
 	@Email(message = "Invalid email address")
 	private String email;
+
+	// Configured CascadeType to extend ALL CRUD functions performed to Manufacturer
+	// entity to apply to all associated products as well (could use .REMOVE in case
+	// of
+	// just deleting a manufacturer and all its associated Products)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "manufacturer")
+	private List<Product> products;
 
 	public Manufacturer() {
 		super();
