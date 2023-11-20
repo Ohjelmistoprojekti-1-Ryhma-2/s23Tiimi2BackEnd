@@ -46,7 +46,7 @@ public class CustomerController {
 	// A delete function of registered customers
 	// only for admins (Omppu & Rane).
 	@GetMapping("/deletecustomer/{id}")
-	public String deleteCustomer(@PathVariable("id") Long id, Model model) {
+	public String deleteCustomerByAdmins(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
 		return "redirect:/customers";
@@ -74,7 +74,7 @@ public class CustomerController {
 	// Only admins (Omppu & Rane) have the acces rights for /listcustomer -enpoint.
 
 	@PostMapping("/addcustomer")
-	public String addProduct(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
+	public String addCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addcustomer";
 		}
@@ -93,8 +93,8 @@ public class CustomerController {
 	// back to /index -endpoint. Once again, the reason is that
 	// only admins have access to /listcustomer -endpoint.
 
-	@GetMapping("/deletemanufacturer/{id}")
-	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/deletecustomer/{id}")
+	public String deleteCustomerByCustomers(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
 
