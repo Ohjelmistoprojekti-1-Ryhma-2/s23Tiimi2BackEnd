@@ -73,6 +73,10 @@ public class ProductController {
 
 	@PostMapping("/addproduct")
 	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		 if (!"clothing".equals(product.getType())) {
+        product.setSize("-"); // or "No size" as per your requirement
+    }
+
 		if (result.hasErrors()) {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "addproduct";
