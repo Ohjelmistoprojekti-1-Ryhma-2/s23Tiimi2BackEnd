@@ -10,6 +10,29 @@
 
 <body>
     <header th:insert="blocks/navbar :: navbar"></header>
+    <h2>Customers</h2>
+    <table>
+        <tr>
+            <th>
+                name
+            </th>
+            <th>
+                address
+            </th>
+            <th>
+                phone
+            </th>
+            <th>
+                email
+            </th>
+        </tr>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.phone}"></td>
+            <td th:text="${customer.email}"></td>
+        </tr>
+    </table>
 </body>
 
 </html>

@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dogstore.dogstore.models.Customer;
 import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.models.Product;
+import com.dogstore.dogstore.repository.CustomerRepository;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
 
@@ -18,10 +20,13 @@ public class DogstoreApplication {
 	// LoggerFactory.getLogger(DogstoreApplication.class);
 	private final ManufacturerRepository manufacturerRepository;
 	private final ProductRepository productRepository;
+	private final CustomerRepository customerRepository;
 
-	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository) {
+	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository,
+			CustomerRepository customerRepository) {
 		this.manufacturerRepository = manufacturerRepository;
 		this.productRepository = productRepository;
+		this.customerRepository = customerRepository;
 	}
 
 	public static void main(String[] args) {
@@ -41,6 +46,8 @@ public class DogstoreApplication {
 			Manufacturer littlebigger = new Manufacturer("Little & Bigger", " Zenchu street, China", "AS",
 					"+86 AAA BBB CCC", "littlebigger@gmail.com");
 			littlebigger = manufacturerRepository.save(littlebigger);
+
+			customerRepository.save(new Customer(null, "Admin", "Koulukatu 8", "+3580000", "admin@gmail.com"));
 
 			productRepository.save(new Product("Sadetakki", "Vaate", "Keltainen", "S", 39.99, rukka));
 			productRepository.save(new Product("Talvitakki", "Vaate", "Musta", "XL", 64.99, rukka));
