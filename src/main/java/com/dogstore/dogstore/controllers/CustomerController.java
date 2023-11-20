@@ -27,6 +27,11 @@ public class CustomerController {
 	}
 
 	// Edit function for registered customers.
+
+	// Should this meant only for admins or customers?
+	// (If customers, then they should not have access
+	// to visit /listcustomer.html. Its for only admins). -Kaj
+
 	@GetMapping("/editcustomer/{id}")
 	public String editCustomer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customers", customerRepository.findById(id));
@@ -40,19 +45,17 @@ public class CustomerController {
 			return "editcustomer";
 		}
 		customerRepository.save(customer);
-		return "redirect:/customers";
+		return "redirect:/customers"; // Redirect to list of registered customer page, i.e. /listcustomer.html.
 	}
 
-	// A delete function of registered customers
+	// A delete function of registered customers,
 	// only for admins (Omppu & Rane).
 	@GetMapping("/deletecustomer/{id}")
 	public String deleteCustomerByAdmins(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
-		return "redirect:/customers";
+		return "redirect:/customers";// Redirect to list of registered customer page, i.e. /listcustomer.html.
 	}
-
-	// Redirect to list of registered customer page.
 
 	// Move to /addcustomer -enpoint,
 	// which has a form for new customers to register.
