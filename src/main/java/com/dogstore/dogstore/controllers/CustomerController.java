@@ -49,7 +49,7 @@ public class CustomerController {
 	// Only admins (Omppu & Rane) have the acces rights for /listcustomer -enpoint.
 
 	@PostMapping("/addcustomer")
-	public String addProduct(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
+	public String addCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addcustomer";
 		}
@@ -68,8 +68,8 @@ public class CustomerController {
 	// back to /index -endpoint. Once again, the reason is that
 	// only admins have access to /listcustomer -endpoint.
 
-	@GetMapping("/deletemanufacturer/{id}")
-	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/deletecustomer/{id}")
+	public String deleteCustomer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
 
