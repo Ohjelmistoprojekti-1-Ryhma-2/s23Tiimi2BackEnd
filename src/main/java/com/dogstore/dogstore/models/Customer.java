@@ -22,7 +22,7 @@ public class Customer {
 	@NotBlank(message = "Name is mandatory")
 	private String name;
 
-	// @NotBlank(message = "Address is mandatory")
+	@NotBlank(message = "Address is mandatory")
 	private String address;
 
 	@NotBlank(message = "Phone is mandatory")
