@@ -14,6 +14,11 @@ import jakarta.validation.Valid;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.dogstore.dogstore.models.Customer;
+import com.dogstore.dogstore.repository.CustomerRepository;
 
 @Controller
 public class CustomerController {
@@ -48,4 +53,15 @@ public class CustomerController {
         customerRepository.deleteById(id);
         return "redirect:/customers";
     }
+
+    // Redirect to list of registered customer page.
+
+    // Move to /addcustomer -enpoint,
+    // which has a form for new customers to register.
+    @GetMapping("/addcustomer")
+    public String addCustomerForm(Model model) {
+        model.addAttribute("Customer", new Customer());
+        return "addcustomer";
+    }
+
 }
