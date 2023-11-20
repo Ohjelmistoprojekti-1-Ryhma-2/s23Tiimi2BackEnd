@@ -26,11 +26,9 @@ public class Product {
 
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
-	@NotBlank(message = "Type is mandatory!")
 	private String type;
 	@NotBlank(message = "Color is mandatory!")
 	private String color;
-	@NotBlank(message = "Size is mandatory!")
 	private String size;
 	@NotNull(message = "Price is mandatory!")
 	private double price;
@@ -41,7 +39,7 @@ public class Product {
 	private Manufacturer manufacturer;
 
 	public Product() {
-
+		this.type = "";
 	}
 
 	public Product(String name, String type, String color, String size, double price, Manufacturer manufacturer) {
