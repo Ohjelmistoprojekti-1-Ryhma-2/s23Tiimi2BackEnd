@@ -18,6 +18,7 @@
             <th>Color</th>
             <th>Size</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Manufacturer</th>
         </tr>
         <tr th:each="product : ${products}">
@@ -26,6 +27,7 @@
             <td th:text="${product.color}"></td>
             <td th:text="${product.size}"></td>
             <td th:text="${product.price}"></td>
+            <td th:text="${product.quantity}"></td>
             <td th:text="${product.manufacturer.name}"></td>
             <td><a th:href="@{/deleteproduct/{id}(id=${product.id})}">Delete</a></td>
             <td><a th:href="@{/editproduct/{id}(id=${product.id})}">Edit</a></td>

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,6 +33,9 @@ public class Product {
 	private String size;
 	@NotNull(message = "Price is mandatory!")
 	private double price;
+	@NotNull(message = "Quantity is mandatory!")
+	@Min(value = 0, message = "Quantity can't be less than 0!")
+	private int quantity;
 
 	@ManyToOne(fetch = FetchType.LAZY) // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
 										// Boot 2 and React - Second Edition", Chapter 'Relationships between tables'
@@ -48,6 +52,20 @@ public class Product {
 		this.color = color;
 		this.size = size;
 		this.price = price;
+		this.manufacturer = manufacturer;
+	}
+
+	public Product(@NotBlank(message = "Name is mandatory!") String name, String type,
+			@NotBlank(message = "Color is mandatory!") String color, String size,
+			@NotNull(message = "Price is mandatory!") double price,
+			@NotNull(message = "Quantity is mandatory!") @Min(value = 0, message = "Quantity can't be less than 0!") int quantity,
+			Manufacturer manufacturer) {
+		this.name = name;
+		this.type = type;
+		this.color = color;
+		this.size = size;
+		this.price = price;
+		this.quantity = quantity;
 		this.manufacturer = manufacturer;
 	}
 
@@ -135,6 +153,14 @@ public class Product {
 	 */
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public Manufacturer getManufacturer() {

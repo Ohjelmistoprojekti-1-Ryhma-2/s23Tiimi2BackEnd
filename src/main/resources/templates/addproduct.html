@@ -1,120 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Product</title>
-    <link rel="stylesheet" href="/style.css" />
-    <script>
-      function updateSize() {
-        const selectedType = document.getElementById("type").value;
-        const size = document.getElementById("size");
-        const hiddenSize = document.getElementById("hiddenSize");
-        const sizeContainer = document.getElementById("size");
 
-        if (selectedType === "clothing") {
-          sizeContainer.style.display = "block";
-          size.disabled = false;
-          hiddenSize.disabled = true;
-        } else {
-          sizeContainer.style.display = "none";
-          size.disabled = true;
-          hiddenSize.disabled = false;
-        }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Product</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script>
+    function updateSize() {
+      const selectedType = document.getElementById("type").value;
+      const size = document.getElementById("size");
+      const hiddenSize = document.getElementById("hiddenSize");
+      const sizeContainer = document.getElementById("size");
+
+      if (selectedType === "clothing") {
+        sizeContainer.style.display = "block";
+        size.disabled = false;
+        hiddenSize.disabled = true;
+      } else {
+        sizeContainer.style.display = "none";
+        size.disabled = true;
+        hiddenSize.disabled = false;
       }
-    </script>
-  </head>
+    }
+  </script>
+</head>
 
-  <body>
-    <header th:insert="blocks/navbar :: navbar"></header>
-    <h2>Add a New Product</h2>
-    <div>
-      <form
-        th:object="${product}"
-        class="form-input"
-        th:action="@{/addproduct}"
-        method="post"
-      >
-        <label for="name">Name:</label><br />
-        <input type="text" id="name" th:field="*{name}" />
-        <p
-          th:if="${#fields.hasErrors('name')}"
-          class="error-message"
-          th:errors="*{type}"
-        >
-          Name Error
-        </p>
-        <br />
+<body>
+  <header th:insert="blocks/navbar :: navbar"></header>
+  <h2>Add a New Product</h2>
+  <div>
+    <form th:object="${product}" class="form-input" th:action="@{/addproduct}" method="post">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" th:field="*{name}" />
+      <p th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{type}">
+        Name Error
+      </p>
+      <br />
 
-        <label for="type">Type:</label><br />
-        <select id="type" th:field="*{type}" onchange="updateSize()">
-          <option value="" selected disabled>Select Type</option>
-          <option value="clothing">Clothing</option>
-          <option value="food">Food</option>
-          <option value="toy">Toy</option>
+      <label for="type">Type:</label><br />
+      <select id="type" th:field="*{type}" onchange="updateSize()">
+        <option value="" selected disabled>Select Type</option>
+        <option value="clothing">Clothing</option>
+        <option value="food">Food</option>
+        <option value="toy">Toy</option>
+      </select>
+      <br />
+
+      <div id="size" style="display: none">
+        <label for="size">Size:</label><br />
+        <select id="size" th:field="*{size}">
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
         </select>
-        <br />
+      </div>
+      <input type="hidden" id="hiddenSize" name="size" value="No size" />
 
-        <div id="size" style="display: none">
-          <label for="size">Size:</label><br />
-          <select id="size" th:field="*{size}">
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-          </select>
-        </div>
-        <input type="hidden" id="hiddenSize" name="size" value="No size" />
+      <label for="color">Color:</label><br />
+      <input type="text" id="color" th:field="*{color}" />
+      <p th:if="${#fields.hasErrors('color')}" class="error-message" th:errors="*{color}">
+        Color Error
+      </p>
+      <br />
 
-        <label for="color">Color:</label><br />
-        <input type="text" id="color" th:field="*{color}" />
-        <p
-          th:if="${#fields.hasErrors('color')}"
-          class="error-message"
-          th:errors="*{color}"
-        >
-          Color Error
-        </p>
-        <br />
+      <label for="price">Price:</label><br />
+      <input type="number" id="price" th:field="*{price}" min="0" step="0.01" />
+      <p th:if="${#fields.hasErrors('price')}" class="error-message" th:errors="*{price}">
+        Price Error
+      </p>
+      <br />
 
-        <label for="price">Price:</label><br />
-        <input
-          type="number"
-          id="price"
-          th:field="*{price}"
-          min="0"
-          step="0.01"
-        />
-        <p
-          th:if="${#fields.hasErrors('price')}"
-          class="error-message"
-          th:errors="*{price}"
-        >
-          Price Error
-        </p>
-        <br />
+      <label for="quantity">Quantity:</label><br />
+      <input type="number" id="quantity" th:field="*{quantity}" min="0" step="1" />
+      <p th:if="${#fields.hasErrors('quantity')}" class="error-message" th:errors="*{quantity}">
+        Quantity Error
+      </p>
+      <br />
 
-        <label for="manufacturer">Manufacturer:</label><br />
-        <select id="manufacturer" th:field="*{manufacturer}">
-          <option value="">Select a manufacturer</option>
-          <option
-            th:each="manufacturer : ${manufacturers}"
-            th:value="${manufacturer.id}"
-            th:text="${manufacturer.name}"
-          ></option>
-        </select>
-        <p
-          th:if="${#fields.hasErrors('manufacturer')}"
-          class="error-message"
-          th:errors="*{manufacturer}"
-        >
-          Manufacturer Error
-        </p>
-        <br />
+      <label for="manufacturer">Manufacturer:</label><br />
+      <select id="manufacturer" th:field="*{manufacturer}">
+        <option value="">Select a manufacturer</option>
+        <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}">
+        </option>
+      </select>
+      <p th:if="${#fields.hasErrors('manufacturer')}" class="error-message" th:errors="*{manufacturer}">
+        Manufacturer Error
+      </p>
+      <br />
 
-        <input type="submit" value="Add" />
-      </form>
-      <a href="/listproducts">Back to Products</a><br />
-      <a href="/index">Back to Home</a>
-    </div>
-  </body>
+      <input type="submit" value="Add" />
+    </form>
+    <a href="/listproducts">Back to Products</a><br />
+    <a href="/index">Back to Home</a>
+  </div>
+</body>
+
 </html>

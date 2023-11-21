@@ -21,20 +21,20 @@ public class RestController {
 	@Autowired
 	private ManufacturerRepository manufacturerRepository;
 
-	// REST Products interface
-	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public @ResponseBody List<Product> productsListRest() {
-		return (List<Product>) productRepository.findAll();
-	}
+	// // REST Products interface
+	// @RequestMapping(value = "/products", method = RequestMethod.GET)
+	// public @ResponseBody List<Product> productsListRest() {
+	// return (List<Product>) productRepository.findAll();
+	// }
 
 	// REST type search example:
 	// http://localhost:8080/api/products/search/findByType?type=Sadetakki
 
-	// REST Manufacturer interface
-	@RequestMapping(value = "/manufacturers", method = RequestMethod.GET)
-	public @ResponseBody List<Manufacturer> manufacturersListRest() {
-		return (List<Manufacturer>) manufacturerRepository.findAll();
-	}
+	// // REST Manufacturer interface
+	// @RequestMapping(value = "/manufacturers", method = RequestMethod.GET)
+	// public @ResponseBody List<Manufacturer> manufacturersListRest() {
+	// return (List<Manufacturer>) manufacturerRepository.findAll();
+	// }
 
 	/*
 	 * @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
