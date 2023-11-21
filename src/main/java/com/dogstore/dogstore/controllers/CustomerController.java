@@ -91,18 +91,20 @@ public class CustomerController {
 
 	// The code will first retrieve the given registered customer by their ID,
 	// so it can also delete them from list of other registered customers.
-
-	// When deleteById -method is executed, it will move former customers
-	// back to /index -endpoint. Once again, the reason is that
-	// only admins have access to /listcustomer -endpoint.
-
-	@GetMapping("/deletecustomer/{id}")
-	public String deleteCustomerByCustomers(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("customer", customerRepository.findById(id));
-		customerRepository.deleteById(id);
-
-		return "redirect:/index"; // Redirects to endpoint /index.html
-
-	}
+	/*
+	 * // When deleteById -method is executed, it will move former customers
+	 * // back to /index -endpoint. Once again, the reason is that
+	 * // only admins have access to /listcustomer -endpoint.
+	 * 
+	 * @GetMapping("/deletecustomer/{id}")
+	 * public String deleteCustomerByCustomers(@PathVariable("id") Long id, Model
+	 * model) {
+	 * model.addAttribute("customer", customerRepository.findById(id));
+	 * customerRepository.deleteById(id);
+	 * 
+	 * return "redirect:/index"; // Redirects to endpoint /index.html
+	 * 
+	 * }
+	 */
 
 }
