@@ -39,8 +39,8 @@
       <br />
 
       <label for="type">Type:</label><br />
-      <select id="type" th:field="*{type}" onchange="updateSize()">
-        <option value="" selected disabled>Select Type</option>
+      <select id="type" th:field="*{type}" required onchange="updateSize()">
+        <option value="">Select Type</option>
         <option value="clothing">Clothing</option>
         <option value="food">Food</option>
         <option value="toy">Toy</option>
@@ -79,8 +79,8 @@
       <br />
 
       <label for="manufacturer">Manufacturer:</label><br />
-      <select id="manufacturer" th:field="*{manufacturer}">
-        <option value="">Select a manufacturer</option>
+      <select id="manufacturer" th:field="*{manufacturer} " required>
+        <option value="" >Select a manufacturer</option>
         <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}">
         </option>
       </select>
