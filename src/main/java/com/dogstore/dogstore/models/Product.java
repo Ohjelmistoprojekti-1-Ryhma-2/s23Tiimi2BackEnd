@@ -37,8 +37,8 @@ public class Product {
 	@Min(value = 0, message = "Quantity can't be less than 0!")
 	private int quantity;
 
-	@ManyToOne(fetch = FetchType.LAZY) // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
-										// Boot 2 and React - Second Edition", Chapter 'Relationships between tables'
+	@ManyToOne // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
+				// Boot 2 and React - Second Edition", Chapter 'Relationships between tables'
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
 

@@ -1,5 +1,7 @@
 package com.dogstore.dogstore.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogstore.dogstore.models.Product;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
@@ -29,6 +32,12 @@ public class ProductController {
 	public String home(Model model) {
 		model.addAttribute("products", productRepository.findAll());
 		return "listproducts"; // listproducts.html
+	}
+
+	// Test REST api for products, including manufacturer in non-HAL format
+	@GetMapping("/test")
+	public @ResponseBody List<Product> test() {
+		return (List<Product>) productRepository.findAll();
 	}
 
 	// Retrieving a product by its ID for editing in the editproduct.html endpoint
@@ -73,9 +82,9 @@ public class ProductController {
 
 	@PostMapping("/addproduct")
 	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
-		 if (!"clothing".equals(product.getType())) {
-        product.setSize("-"); // or "No size" as per your requirement
-    }
+		if (!"clothing".equals(product.getType())) {
+			product.setSize("-"); // or "No size" as per your requirement
+		}
 
 		if (result.hasErrors()) {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
