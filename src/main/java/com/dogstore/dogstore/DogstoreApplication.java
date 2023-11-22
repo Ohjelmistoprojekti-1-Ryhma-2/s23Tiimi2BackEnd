@@ -49,10 +49,10 @@ public class DogstoreApplication {
 
 			customerRepository.save(new Customer(null, "Admin", "Koulukatu 8", "+3580000", "admin@gmail.com"));
 
-			productRepository.save(new Product("Sadetakki", "Vaate", "Keltainen", "S", 39.99, rukka));
-			productRepository.save(new Product("Talvitakki", "Vaate", "Musta", "L", 64.99, rukka));
-			productRepository.save(new Product("Broilerin fileelastu", "Ruoka", "Keltaruskea", "-", 6.99, purenatural));
-			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla", "Lelu",
+			productRepository.save(new Product("Sadetakki", "clothing", "Keltainen", "S", 39.99, rukka));
+			productRepository.save(new Product("Talvitakki", "clothing", "Musta", "L", 64.99, rukka));
+			productRepository.save(new Product("Broilerin fileelastu", "food", "Keltaruskea", "-", 6.99, purenatural));
+			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla", "toy",
 					"Siitrunakeltainen & Jännävioletti", "-", 7.99, littlebigger));
 
 		};
