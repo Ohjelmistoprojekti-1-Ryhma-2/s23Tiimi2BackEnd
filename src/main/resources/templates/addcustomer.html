@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Manufacturer Info</title>
+    <title>Add Customer Info</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
     <header th:insert="blocks/navbar :: navbar"></header>
-    <h2>Add a Manufacturer</h2>
+    <h2>Add a Customer</h2>
     <form th:object="${Customer}" th:action="@{/addcustomer}" method="post">
 
         <label for="name">Name:</label><br>

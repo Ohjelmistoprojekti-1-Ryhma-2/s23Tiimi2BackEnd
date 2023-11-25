@@ -32,6 +32,13 @@ public class CustomerController {
 	// (If customers, then they should not have access
 	// to visit /listcustomer.html. Its for only admins). -Kaj
 
+	// AFAIK the back end system is only accessible by the product owners (or
+	// admins, Omppu & Rane).
+	// A link to the shop itself is to be provided for any customers who
+	// accidentally navigate to
+	// the back end login page (to be implemented). Made some changes accordingly -
+	// SJ
+
 	@GetMapping("/editcustomer/{id}")
 	public String editCustomer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customers", customerRepository.findById(id));
@@ -45,7 +52,7 @@ public class CustomerController {
 			return "editcustomer";
 		}
 		customerRepository.save(customer);
-		return "redirect:/customers"; // Redirect to list of registered customer page, i.e. /listcustomer.html.
+		return "redirect:/listcustomers"; // Redirect to list of registered customer page, i.e. /listcustomer.html.
 	}
 
 	// A delete function of registered customers,
@@ -54,7 +61,7 @@ public class CustomerController {
 	public String deleteCustomerByAdmins(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
-		return "redirect:/customers";// Redirect to list of registered customer page, i.e. /listcustomer.html.
+		return "redirect:/listcustomers";// Redirect to list of registered customer page, i.e. /listcustomer.html.
 	}
 
 	// Move to /addcustomer -enpoint,
@@ -69,42 +76,13 @@ public class CustomerController {
 
 	// If there exist error result, it will return /addcustomer -endpoint.
 
-	// Otherwise (ie. no errors) it will moves to /index -endpoint,
-	// not /listcustomer -endpoint, since we don't want
-	// newly registered customers see other customers' personal information
-	// (a cyber security flaw).
-
-	// Only admins (Omppu & Rane) have the acces rights for /listcustomer -enpoint.
-
 	@PostMapping("/addcustomer")
 	public String addCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addcustomer";
 		}
 		customerRepository.save(customer);
-		return "redirect:/index"; // Redirects to endpoint /index.html
+		return "redirect:/listcustomers"; // Redirects to endpoint /listcustomers.html
 	}
-
-	// A delete function for registered customers.
-	// It will erase all data and information
-	// related to the given registered customer.
-
-	// The code will first retrieve the given registered customer by their ID,
-	// so it can also delete them from list of other registered customers.
-	/*
-	 * // When deleteById -method is executed, it will move former customers
-	 * // back to /index -endpoint. Once again, the reason is that
-	 * // only admins have access to /listcustomer -endpoint.
-	 * 
-	 * @GetMapping("/deletecustomer/{id}")
-	 * public String deleteCustomerByCustomers(@PathVariable("id") Long id, Model
-	 * model) {
-	 * model.addAttribute("customer", customerRepository.findById(id));
-	 * customerRepository.deleteById(id);
-	 * 
-	 * return "redirect:/index"; // Redirects to endpoint /index.html
-	 * 
-	 * }
-	 */
 
 }
