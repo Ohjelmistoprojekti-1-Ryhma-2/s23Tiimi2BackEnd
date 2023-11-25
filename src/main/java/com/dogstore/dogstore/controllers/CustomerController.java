@@ -20,7 +20,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
 
-	@GetMapping("/customers")
+	@GetMapping("/listcustomers")
 	public String listOfCustomers(Model model) {
 		model.addAttribute("customers", customerRepository.findAll());
 		return "listcustomers";
