@@ -10,17 +10,17 @@
   <body>
     <header th:insert="blocks/navbar :: navbar"></header>
     <!-- filter by manufacturers -->
-    <form action="/productsbymanufacturer" method="get">
-      <select name="manufacturerId">
-        <option value="">Filter by Manufacturer</option>
-        <option
-          th:each="manufacturer : ${manufacturers}"
-          th:value="${manufacturer.id}"
-          th:text="${manufacturer.name}"
-        ></option>
-      </select>
-      <button type="submit">Search</button>
-    </form>
+<form action="/productsbymanufacturer" method="get">
+  <label for="manufacturerId"></label>
+  <select name="manufacturerId" required>
+    <option value="" disabled selected>Select a manufacturer</option>
+    <option th:each="manufacturer : ${manufacturers}"
+            th:value="${manufacturer.id}"
+            th:text="${manufacturer.name}">
+    </option>
+  </select>
+  <button type="submit">Search</button>
+</form>
 
     <h2>List all products</h2>
     <table>
