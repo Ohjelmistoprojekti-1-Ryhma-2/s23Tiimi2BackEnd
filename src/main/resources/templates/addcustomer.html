@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer Info</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h2>Add a Customer</h2>
+    <form th:object="${Customer}" th:action="@{/addcustomer}" method="post">
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" th:field="*{name}" />
+        <p th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{name}"></p><br>
+
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" th:field="*{address}" />
+        <p th:if="${#fields.hasErrors('address')}" class="error-message" th:errors="*{name}"></p><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" th:field="*{phone}" />
+        <p th:if="${#fields.hasErrors('phone')}" class="error-message" th:errors="*{name}"></p><br>
+
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" th:field="*{email}" />
+        <p th:if="${#fields.hasErrors('email')}" class="error-message" th:errors="*{name}"></p><br>
+
+        <button type="submit">Add Customer</button>
+    </form>
+       <footer th:insert="blocks/navbottom :: navbottom"></footer>
+</body>
+
+</html>

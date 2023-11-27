@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 
-// @CrossOrigin
 @RestController
 public class ManufacturerRestController {
 
-	@Autowired
-	private ManufacturerRepository manufacturerRepository;
+    @Autowired
+    private ManufacturerRepository manufacturerRepository;
 
-	// REST Manufacturer interface
-	@GetMapping("/manufacturers")
-	public List<Manufacturer> manufacturersListRest() {
-		return (List<Manufacturer>) manufacturerRepository.findAll();
-	}
+    // REST Manufacturer interface
+    @GetMapping(value = "/manufacturers")
+    public List<Manufacturer> manufacturersListRest() {
+        return (List<Manufacturer>) manufacturerRepository.findAll();
+    }
 
 }

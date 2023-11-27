@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dogstore</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header th:insert="blocks/navbar :: navbar"></header>
+    <h2>Edit customer</h2>
+    <form th:object="${customers}" th:action="@{/savecustomer}" method="post">
+        <input type="hidden" id="id" th:field="*{id}" />
+        <label>Name: </label>
+        <input type="text" id="name" th:field="*{name}" /><br>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Type Error</p>
+        <label>Address: </label>
+        <input type="text" id="address" th:field="*{address}" /><br>
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Type Error</p>
+        <label>Phone: </label>
+        <input type="text" id="phone" th:field="*{phone}" /><br>
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Type Error</p>
+        <label>E-Mail: </label>
+        <input type="text" id="email" th:field="*{email}" /><br>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Type Error</p>
+        <input type="submit" value="Save" />
+
+    </form>
+
+    <footer th:insert="blocks/navbottom :: navbottom"></footer>
+</body>
+
+</html>

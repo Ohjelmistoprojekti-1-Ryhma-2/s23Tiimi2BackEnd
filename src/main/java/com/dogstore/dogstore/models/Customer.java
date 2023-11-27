@@ -1,39 +1,30 @@
 package com.dogstore.dogstore.models;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
-//This entity is for informative list of many manufacturers.
-//Manufacturers' company information is for ordering products
-//directly from manufacturers to dogstore's storage, 
-//now and in future.
-
+/*
+ * This entity is for listing and searching
+ *  all registered customers.
+ */
 @Entity
-public class Manufacturer {
+public class Customer {
 	// Automatic running Id
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	// Essential informative parameters about manufactures
+
 	@NotBlank(message = "Name is mandatory")
-	@Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
 	private String name;
 
 	@NotBlank(message = "Address is mandatory")
 	private String address;
-
-	@NotBlank(message = "Continent is mandatory")
-	private String continent;
 
 	@NotBlank(message = "Phone is mandatory")
 	private String phone;
@@ -42,70 +33,86 @@ public class Manufacturer {
 	@Email(message = "Invalid email address")
 	private String email;
 
-	// Configured CascadeType to extend ALL CRUD functions performed to Manufacturer
-	// entity to apply to all associated products as well (could use .REMOVE in case
-	// of
-	// just deleting a manufacturer and all its associated Products)
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "manufacturer")
-	private List<Product> products;
-
-	public Manufacturer() {
+	public Customer() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Manufacturer(String name, String address, String continent, String phone, String email) {
+	public Customer(Long id, String name, String address, String phone, String email) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.address = address;
-		this.continent = continent;
 		this.phone = phone;
 		this.email = email;
 	}
 
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @param address the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public String getContinent() {
-		return continent;
-
-	}
-
-	public void setContinent(String continent) {
-		this.continent = continent;
-	}
-
+	/**
+	 * @return the phone
+	 */
 	public String getPhone() {
 		return phone;
 	}
 
+	/**
+	 * @param phone the phone to set
+	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
+	/**
+	 * @return the email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * @param email the email to set
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}

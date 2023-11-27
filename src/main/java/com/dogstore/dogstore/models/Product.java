@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,31 +18,56 @@ public class Product {
 	private Long id;
 
 	// Other parameters
-	@NotBlank(message = "Type is mandatory")
-    private String type;
 
-	@NotBlank(message = "Color is mandatory")
+	// Note that values for type are three: clothes, food or toy.
+	// If clothes, then there are also three additional types: S, M or L.
+
+	// Values are written in Finnish.
+
+	@NotBlank(message = "Name is mandatory!")
+	private String name;
+	//type validation is in product controller
+	private String type;
+	@NotBlank(message = "Color is mandatory!")
 	private String color;
 
 	@NotBlank(message = "Size is mandatory")
 	private String size;
-
-	@NotNull(message = "Price is mandatory")
+	@NotNull(message = "Price is mandatory!")
 	private double price;
+	@NotNull(message = "Quantity is mandatory!")
+	@Min(value = 0, message = "Quantity can't be less than 0!")
+	private int quantity;
 
-	@ManyToOne
+	@ManyToOne // According to Juha Hinkula's book "Hands-On Full Stack Development with Spring
+				// Boot 2 and React - Second Edition", Chapter 'Relationships between tables'
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
 
 	public Product() {
-
+		this.type = "";
 	}
 
-	public Product(String type, String color, String size, double price, Manufacturer manufacturer) {
+	public Product(String name, String type, String color, String size, double price, Manufacturer manufacturer) {
+		this.name = name;
 		this.type = type;
 		this.color = color;
 		this.size = size;
 		this.price = price;
+		this.manufacturer = manufacturer;
+	}
+
+	public Product(@NotBlank(message = "Name is mandatory!") String name, String type,
+			@NotBlank(message = "Color is mandatory!") String color, String size,
+			@NotNull(message = "Price is mandatory!") double price,
+			@NotNull(message = "Quantity is mandatory!") @Min(value = 0, message = "Quantity can't be less than 0!") int quantity,
+			Manufacturer manufacturer) {
+		this.name = name;
+		this.type = type;
+		this.color = color;
+		this.size = size;
+		this.price = price;
+		this.quantity = quantity;
 		this.manufacturer = manufacturer;
 	}
 
@@ -57,6 +83,20 @@ public class Product {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -115,6 +155,14 @@ public class Product {
 	 */
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public Manufacturer getManufacturer() {

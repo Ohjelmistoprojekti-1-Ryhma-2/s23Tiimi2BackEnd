@@ -39,11 +39,11 @@ public class ManufacturerController {
 	// Moves back to /listmanufacturer -endpoint.
 	@PostMapping("/addmanufacturer")
 	public String addProduct(@Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
-    	if (result.hasErrors()) {
-        	return "addmanufacturer";
-    	}
-    	manufacturerRepository.save(manufacturer);
-    	return "redirect:/listmanufacturers";
+		if (result.hasErrors()) {
+			return "addmanufacturer";
+		}
+		manufacturerRepository.save(manufacturer);
+		return "redirect:/listmanufacturers";
 	}
 
 	// Retrieving a manufacturer by its ID in order delete it from list of

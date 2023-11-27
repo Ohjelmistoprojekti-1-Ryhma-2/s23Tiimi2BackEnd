@@ -11,6 +11,8 @@
 <body>
     <header th:insert="blocks/navbar :: navbar"></header>
     <h2> List of manufactures contact info</h2>
+
+    </div>
     <table>
         <tr>
             <th>Manufacturer</th>
@@ -25,12 +27,45 @@
             <td style='width:auto' th:text="${manufacturer.continent}"></td>
             <td sstyle='width:auto' th:text="${manufacturer.phone}"></td>
             <td style='width:auto' th:text="${manufacturer.email}"></td>
-            <td><a th:href="@{/deletemanufacturer/{id}(id=${manufacturer.id})}">Delete</a></td>
+          <td><a href="javascript:;" th:attr="onclick=|showDeleteConfirmation(${manufacturer.id})|">Delete</a></td>
+
+
+
         </tr>
     </table>
-    <a href="/addmanufacturer" class="btn btn-primary">Add Manufacturer</a><br>
-    <a href="/listproducts" class="btn btn-primary">Products</a><br>
-    <a href="/index" class="btn btn-primary">Back to Home</a>
+
+    <footer th:insert="blocks/navbottom :: navbottom"></footer>
+
+    <!--Delete confirmation message for manufacturers-->
+    <div id="deleteConfirmationModal" class="modal">
+        <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Confirm Deletion</h2>
+            <p>This manufacturer still has products in the store. Are you sure you want to delete this manufacturer?</p>
+            <button onclick="confirmDelete()">Delete</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+
+    <script>
+        var manufacturerIdToDelete = 0;
+        
+        function showDeleteConfirmation(manufacturerId) {
+            manufacturerIdToDelete = manufacturerId;
+            document.getElementById("deleteConfirmationModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("deleteConfirmationModal").style.display = "none";
+        }
+
+        function confirmDelete() {
+            window.location.href = "/deletemanufacturer/" + manufacturerIdToDelete;
+            closeModal();
+        }
+    </script>
+
 </body>
 
 </html>
