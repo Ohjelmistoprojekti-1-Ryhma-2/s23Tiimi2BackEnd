@@ -30,6 +30,8 @@ public class Product {
 	private String type;
 	@NotBlank(message = "Color is mandatory!")
 	private String color;
+
+	@NotBlank(message = "Size is mandatory")
 	private String size;
 	@NotNull(message = "Price is mandatory!")
 	private double price;

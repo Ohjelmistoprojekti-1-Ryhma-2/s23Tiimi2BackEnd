@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.dogstore.dogstore.models.Customer;
 import com.dogstore.dogstore.models.Manufacturer;
@@ -31,6 +33,16 @@ public class DogstoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DogstoreApplication.class, args);
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/products").allowedOrigins("http://localhost:5173");
+			}
+		};
 	}
 
 	@Bean
