@@ -1,5 +1,6 @@
 package com.dogstore.dogstore.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogstore.dogstore.models.Product;
@@ -31,6 +33,7 @@ public class ProductController {
 	@GetMapping("/listproducts")
 	public String home(Model model) {
 		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listproducts"; // listproducts.html
 	}
 
@@ -82,16 +85,38 @@ public class ProductController {
 
 	@PostMapping("/addproduct")
 	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		if (!Arrays.asList("food", "clothing", "toy").contains(product.getType())) {
+			result.rejectValue("type", "error.product", "Invalid product type");
+		}
+
+		// Set size as "-" if type is not "clothing"
 		if (!"clothing".equals(product.getType())) {
-			product.setSize("-"); // or "No size" as per your requirement
+			product.setSize("-");
+		} else {
+			if (!Arrays.asList("S", "M", "L").contains(product.getSize())) {
+				result.rejectValue("size", "error.product", "Invalid size for clothing");
+			}
 		}
 
 		if (result.hasErrors()) {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "addproduct";
 		}
+		//save product
 		productRepository.save(product);
 		return "redirect:/listproducts";
 	}
+
+	@GetMapping("/productsbymanufacturer")
+	public String getProductsByManufacturer(@RequestParam("manufacturerId") Long manufacturerId, Model model) {
+		List<Product> products = productRepository.findByManufacturerId(manufacturerId);
+		model.addAttribute("products", products);
+
+
+		model.addAttribute("manufacturers", manufacturerRepository.findAll());
+
+		return "listproducts";
+	}
+
 
 }

@@ -1,7 +1,6 @@
 package com.dogstore.dogstore.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +26,7 @@ public class Product {
 
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
+	//type validation is in product controller
 	private String type;
 	@NotBlank(message = "Color is mandatory!")
 	private String color;

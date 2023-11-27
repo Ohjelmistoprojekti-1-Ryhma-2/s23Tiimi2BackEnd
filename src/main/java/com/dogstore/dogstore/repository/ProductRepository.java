@@ -11,4 +11,7 @@ import com.dogstore.dogstore.models.Product;
 @RepositoryRestResource
 public interface ProductRepository extends CrudRepository<Product, Long> {
 	List<Product> findByType(@Param("type") String type);
+
+	List<Product> findByManufacturerId(Long manufacturerId);
+
 }
