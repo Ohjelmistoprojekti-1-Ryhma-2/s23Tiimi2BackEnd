@@ -3,6 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/s23tiimi2backend.jar s23tiimi2backend.jar
+COPY --from=build /target/s23Tiimi2BackEnd.jar s23Tiimi2BackEnd.jar
 EXPOSE 8080
-ENTRYPOINT [ "java", "jar", "/s23tiimi2backend.jar" ]
+ENTRYPOINT [ "java", "jar", "/s23Tiimi2BackEnd.jar" ]
