@@ -3,6 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /s23Tiimi2BackEnd/target/s23Tiimi2BackEnd.jar s23Tiimi2BackEnd.jar
+COPY --from=build /target/dogstore-0.0.1-SNAPSHOT.jar s23Tiimi2BackEnd.jar
 EXPOSE 8080
 ENTRYPOINT [ "java", "jar", "/s23Tiimi2BackEnd.jar" ]
