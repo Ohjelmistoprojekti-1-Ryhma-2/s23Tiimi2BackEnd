@@ -24,15 +24,15 @@ public class DogstoreApplication {
 	private final ProductRepository productRepository;
 	private final CustomerRepository customerRepository;
 
+	public static void main(String[] args) {
+		SpringApplication.run(DogstoreApplication.class, args);
+	}
+
 	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository,
 			CustomerRepository customerRepository) {
 		this.manufacturerRepository = manufacturerRepository;
 		this.productRepository = productRepository;
 		this.customerRepository = customerRepository;
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(DogstoreApplication.class, args);
 	}
 
 	@Bean
