@@ -25,7 +25,7 @@ public class ManufacturerController {
 	@GetMapping("/listmanufacturers")
 	// All PreAuthorizations disabled at the moment to ease production
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String listOfManufacturers(Model model) {
+	public String listManufacturers(Model model) {
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listmanufacturers"; // Moves to endpoint /listmanufacturers.html.
 	}
@@ -43,7 +43,7 @@ public class ManufacturerController {
 	// Moves back to /listmanufacturer -endpoint.
 	@PostMapping("/addmanufacturer")
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String addProduct(@Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
+	public String addManufacturer(@Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addmanufacturer";
 		}

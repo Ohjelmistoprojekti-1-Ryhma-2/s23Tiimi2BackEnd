@@ -15,7 +15,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
-// import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 import java.util.Arrays;
 
@@ -43,7 +43,7 @@ public class WebSecurityConfig {
                 http
                                 .cors(cors -> corsConfigurationSource())
                                 .authorizeHttpRequests(authorize -> authorize
-                                                // .requestMatchers(antMatcher("/css/**")).permitAll()
+                                                .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 // .requestMatchers(antMatcher("/**")).permitAll()
                                                 .requestMatchers(toH2Console()).permitAll()
                                                 .anyRequest().permitAll())

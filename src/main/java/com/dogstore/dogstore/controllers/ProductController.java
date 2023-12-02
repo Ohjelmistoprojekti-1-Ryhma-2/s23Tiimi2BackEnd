@@ -34,7 +34,7 @@ public class ProductController {
 	@GetMapping("/listproducts")
 	// All PreAuthorizations disabled at the moment to ease production
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String home(Model model) {
+	public String listProducts(Model model) {
 		model.addAttribute("products", productRepository.findAll());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listproducts"; // listproducts.html

@@ -24,7 +24,7 @@ public class CustomerController {
 	@GetMapping("/listcustomers")
 	// All PreAuthorizations disabled at the moment to ease production
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String listOfCustomers(Model model) {
+	public String listCustomers(Model model) {
 		model.addAttribute("customers", customerRepository.findAll());
 		return "listcustomers";
 	}
@@ -64,7 +64,7 @@ public class CustomerController {
 	// only for admins (Omppu & Rane).
 	@GetMapping("/deletecustomer/{id}")
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String deleteCustomerByAdmins(@PathVariable("id") Long id, Model model) {
+	public String deleteCustomer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
 		return "redirect:/listcustomers";// Redirect to list of registered customer page, i.e. /listcustomer.html.
