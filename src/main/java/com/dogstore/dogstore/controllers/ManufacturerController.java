@@ -1,6 +1,7 @@
 package com.dogstore.dogstore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,8 @@ public class ManufacturerController {
 
 	// Redirects to list of manufacturers page.
 	@GetMapping("/listmanufacturers")
+	// All PreAuthorizations disabled at the moment to ease production
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String listOfManufacturers(Model model) {
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listmanufacturers"; // Moves to endpoint /listmanufacturers.html.
@@ -30,6 +33,7 @@ public class ManufacturerController {
 	// Move to /addmanufacturer -endpoint,
 	// which has a form for the new manufacturer.
 	@GetMapping("/addmanufacturer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addManufacturerForm(Model model) {
 		model.addAttribute("manufacturer", new Manufacturer());
 		return "addmanufacturer";
@@ -38,6 +42,7 @@ public class ManufacturerController {
 	// Add and save the new manufacturer's contact info.
 	// Moves back to /listmanufacturer -endpoint.
 	@PostMapping("/addmanufacturer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addProduct(@Valid @ModelAttribute Manufacturer manufacturer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addmanufacturer";
@@ -49,6 +54,7 @@ public class ManufacturerController {
 	// Retrieving a manufacturer by its ID in order delete it from list of
 	// manufacturers.
 	@GetMapping("/deletemanufacturer/{id}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteManufacturer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("manufacturer", manufacturerRepository.findById(id));
 		manufacturerRepository.deleteById(id);

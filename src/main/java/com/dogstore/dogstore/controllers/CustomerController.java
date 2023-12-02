@@ -1,6 +1,7 @@
 package com.dogstore.dogstore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,8 @@ public class CustomerController {
 	private CustomerRepository customerRepository;
 
 	@GetMapping("/listcustomers")
+	// All PreAuthorizations disabled at the moment to ease production
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String listOfCustomers(Model model) {
 		model.addAttribute("customers", customerRepository.findAll());
 		return "listcustomers";
@@ -40,6 +43,7 @@ public class CustomerController {
 	// SJ
 
 	@GetMapping("/editcustomer/{id}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String editCustomer(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customers", customerRepository.findById(id));
 		return "editcustomer";
@@ -47,6 +51,7 @@ public class CustomerController {
 
 	// Saving the edited info of registered customers
 	@PostMapping("/savecustomer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String saveCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "editcustomer";
@@ -58,6 +63,7 @@ public class CustomerController {
 	// A delete function of registered customers,
 	// only for admins (Omppu & Rane).
 	@GetMapping("/deletecustomer/{id}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteCustomerByAdmins(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerRepository.findById(id));
 		customerRepository.deleteById(id);
@@ -67,6 +73,7 @@ public class CustomerController {
 	// Move to /addcustomer -enpoint,
 	// which has a form for new customers to register.
 	@GetMapping("/addcustomer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addCustomerForm(Model model) {
 		model.addAttribute("Customer", new Customer());
 		return "addcustomer";
@@ -77,6 +84,7 @@ public class CustomerController {
 	// If there exist error result, it will return /addcustomer -endpoint.
 
 	@PostMapping("/addcustomer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addCustomer(@Valid @ModelAttribute Customer customer, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "addcustomer";
