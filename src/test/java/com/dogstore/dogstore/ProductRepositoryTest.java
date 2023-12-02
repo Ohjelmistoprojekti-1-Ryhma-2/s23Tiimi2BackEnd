@@ -30,6 +30,6 @@ public class ProductRepositoryTest {
         Iterable<Product> products = productRepository.findAll();
         List<Product> productList = new ArrayList<>();
         products.forEach(productList::add);
-        assertEquals(2, productList.size());
+        assertEquals(4, productList.size());
     }
 }

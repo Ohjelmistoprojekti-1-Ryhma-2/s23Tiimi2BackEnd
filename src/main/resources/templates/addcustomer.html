@@ -10,7 +10,7 @@
 
 <body>
     <header th:insert="blocks/navbar :: navbar"></header>
-    <h2>Add a Customer</h2>
+    <h2>Add a Customerr</h2>
     <form th:object="${Customer}" th:action="@{/addcustomer}" method="post">
 
         <label for="name">Name:</label><br>
@@ -31,7 +31,7 @@
 
         <button type="submit">Add Customer</button>
     </form>
-       <footer th:insert="blocks/navbottom :: navbottom"></footer>
+    <footer th:insert="blocks/navbottom :: navbottom"></footer>
 </body>
 
 </html>
