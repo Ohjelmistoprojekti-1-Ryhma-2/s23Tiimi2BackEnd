@@ -5,4 +5,4 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /target/dogstore-0.0.1-SNAPSHOT.jar dogstore-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
-ENTRYPOINT [ "java", "jar", "/dogstore-0.0.1-SNAPSHOT.jar" ]
+ENTRYPOINT [ "java", "-jar", "/dogstore-0.0.1-SNAPSHOT.jar" ]
