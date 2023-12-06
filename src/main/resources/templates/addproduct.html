@@ -33,10 +33,24 @@
     <form th:object="${product}" class="form-input" th:action="@{/addproduct}" method="post">
       <label for="name">Name:</label><br />
       <input type="text" id="name" th:field="*{name}" />
-      <p th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{type}">
+      <p th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{name}">
         Name Error
       </p>
       <br />
+      
+      <!-- Kaj comment: This is the old form without Type entity.
+      After writing and testing some n/ew codes, I think th/is is a better solution.
+      
+      Note that in the n/ew codes, the saving of newly added product was accepted.
+      
+      TODO: Code complains that does not find and cant save 
+      neither type nor size from Product.
+      
+      Check: how we can save newly added type and type.size 
+      when Type is now its own entity?
+    
+      Alternatively: how should th -tags (like th:each, :value, :field) 
+      rewritten, when we want to refer to Type -entity, not to the Product? 		 
 
       <label for="type">Type:</label><br />
       <select id="type" th:field="*{type}" required onchange="updateSize()">
@@ -49,7 +63,7 @@
 
       <div id="size" style="display: none">
         <label for="size">Size:</label><br />
-        <select id="size" th:field="*{size}">
+        <select id="size" th:field="*{type.size}">
           <option value="S">S</option>
           <option value="M">M</option>
           <option value="L">L</option>
@@ -57,6 +71,45 @@
       </div>
       <input type="hidden" id="hiddenSize" name="size" value="No size" />
 
+      -->
+      
+      <!-- Kaj comment: This is the current form with newly created Type entity.
+      This has been remoddeled from below example of Manufacturer.
+      
+      However, its has an depedencie error to DogstoreApplication.
+      Meaning, it borrows values directly from DogstoreApplications` types 
+      such as smallCloth, largeCloth, chickenFood, etc.
+      
+      We want have an invariant, sta/tic list of types (clothing, food, toy) 
+      and size (-, S, M, L) without duplicate values, like in the older versions.
+      
+      
+      
+      It has typecategory and typesize labels.
+      <label for="typecategory">Type:</label><br />
+      <select id="typecategory" th:field="*{type} " required>
+        <option value="" >Select a type</option>
+        <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.category}">
+        </option>
+      </select>
+      <p th:if="${#fields.hasErrors('type')}" class="error-message" th:errors="*{type}">
+        Type Error
+      </p>
+      <br />
+      
+      <label for="typesize">Size:</label><br />
+      <select id="typesize" th:field="*{type} " required>
+        <option value="" >Select a size</option>
+        <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.size}">
+        </option>
+      </select>
+      <p th:if="${#fields.hasErrors('type')}" class="error-message" th:errors="*{type}">
+        Size Error
+      </p>
+      <br />
+      
+      -->
+      
       <label for="color">Color:</label><br />
       <input type="text" id="color" th:field="*{color}" />
       <p th:if="${#fields.hasErrors('color')}" class="error-message" th:errors="*{color}">

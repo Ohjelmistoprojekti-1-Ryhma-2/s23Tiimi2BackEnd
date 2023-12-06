@@ -41,7 +41,9 @@
         Name Error
       </p>
       <br />
-
+      
+      <!-- This is the old form without Type enity.
+      
       <label for="type">Type:</label><br />
       <select id="type" th:field="*{type}" onchange="updateSize()">
         <option value="" selected disabled>Select Type</option>
@@ -59,12 +61,14 @@
           <option value="L">L</option>
         </select>
       </div>
-
+      
       <p th:if="${#fields.hasErrors('size')}" class="error-message" th:errors="*{size}">
         Size Error
       </p>
       <br />
-
+      
+      -->
+      
       <label for="color">Color:</label><br />
       <input type="text" id="color" class="error-message" th:field="*{color}" />
       <p th:if="${#fields.hasErrors('color')}" class="error-message" th:errors="*{color}">

@@ -19,6 +19,7 @@ import com.dogstore.dogstore.models.Product;
 import com.dogstore.dogstore.models.Type;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
+import com.dogstore.dogstore.repository.TypeRepository;
 
 import jakarta.validation.Valid;
 
@@ -29,6 +30,9 @@ public class ProductController {
 	private ProductRepository productRepository;
 
 	@Autowired
+	TypeRepository typeRepository;
+
+	@Autowired
 	ManufacturerRepository manufacturerRepository;
 
 	// Listing of all products
@@ -37,6 +41,7 @@ public class ProductController {
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String listProducts(Model model) {
 		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("types", typeRepository.findAll());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listproducts"; // listproducts.html
 	}
@@ -52,6 +57,7 @@ public class ProductController {
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String editProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productRepository.findById(id));
+		model.addAttribute("types", typeRepository.findAll());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "editproduct"; // editproduct.html
 	}
@@ -61,6 +67,7 @@ public class ProductController {
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String saveProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("types", typeRepository.findAll());
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "editproduct"; // Stay on the form page and display errors
 		}
@@ -84,6 +91,7 @@ public class ProductController {
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addProductForm(Model model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("types", typeRepository.findAll());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "addproduct";
 	}
@@ -110,6 +118,7 @@ public class ProductController {
 		}
 
 		if (result.hasErrors()) {
+			model.addAttribute("types", typeRepository.findAll());
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "addproduct";
 		}
