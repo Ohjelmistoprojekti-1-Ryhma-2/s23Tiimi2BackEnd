@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogstore.dogstore.models.Product;
+import com.dogstore.dogstore.models.Type;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
 
@@ -83,17 +84,19 @@ public class ProductController {
 	// Add and save the new product.
 	// Moves back to /listproducts -endpoint.
 
+	/* TODO: Update setSize from Type entity. */
+
 	@PostMapping("/addproduct")
-	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
-		if (!Arrays.asList("food", "clothing", "toy").contains(product.getType())) {
+	public String addProduct(@Valid @ModelAttribute Product product, Type type, BindingResult result, Model model) {
+		if (!Arrays.asList("food", "clothing", "toy").contains(type.getCategory())) {
 			result.rejectValue("type", "error.product", "Invalid product type");
 		}
 
 		// Set size as "-" if type is not "clothing"
-		if (!"clothing".equals(product.getType())) {
-			product.setSize("-");
+		if (!"clothing".equals(type.getCategory())) {
+			type.setSize("-");
 		} else {
-			if (!Arrays.asList("S", "M", "L").contains(product.getSize())) {
+			if (!Arrays.asList("S", "M", "L").contains(type.getSize())) {
 				result.rejectValue("size", "error.product", "Invalid size for clothing");
 			}
 		}
@@ -102,7 +105,7 @@ public class ProductController {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "addproduct";
 		}
-		//save product
+		// save product
 		productRepository.save(product);
 		return "redirect:/listproducts";
 	}
@@ -112,11 +115,9 @@ public class ProductController {
 		List<Product> products = productRepository.findByManufacturerId(manufacturerId);
 		model.addAttribute("products", products);
 
-
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 
 		return "listproducts";
 	}
-
 
 }
