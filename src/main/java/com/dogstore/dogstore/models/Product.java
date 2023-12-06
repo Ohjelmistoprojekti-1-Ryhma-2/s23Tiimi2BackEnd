@@ -17,24 +17,19 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	// Other parameters
+	// Other essential parameters about product.
 
-	// Note that values for type are three: clothes, food or toy.
-	// If clothes, then there are also three additional types: S, M or L.
-
-	// Values are written in Finnish.
+	// Values can be written / given in Finnish.
 
 	@NotBlank(message = "Name is mandatory!")
 	private String name;
-	//type validation is in product controller
-	private String type;
+
 	@NotBlank(message = "Color is mandatory!")
 	private String color;
 
-	@NotBlank(message = "Size is mandatory")
-	private String size;
 	@NotNull(message = "Price is mandatory!")
 	private double price;
+
 	@NotNull(message = "Quantity is mandatory!")
 	@Min(value = 0, message = "Quantity can't be less than 0!")
 	private int quantity;
@@ -44,30 +39,32 @@ public class Product {
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
 
+	@ManyToOne
+	@JoinColumn(name = "type_id")
+	private Type type;
+
 	public Product() {
-		this.type = "";
+		// this.type = "";
 	}
 
-	public Product(String name, String type, String color, String size, double price, Manufacturer manufacturer) {
+	public Product(String name, String color, double price, Type type, Manufacturer manufacturer) {
 		this.name = name;
-		this.type = type;
 		this.color = color;
-		this.size = size;
 		this.price = price;
+		this.type = type;
 		this.manufacturer = manufacturer;
 	}
 
-	public Product(@NotBlank(message = "Name is mandatory!") String name, String type,
-			@NotBlank(message = "Color is mandatory!") String color, String size,
+	public Product(@NotBlank(message = "Name is mandatory!") String name,
+			@NotBlank(message = "Color is mandatory!") String color,
 			@NotNull(message = "Price is mandatory!") double price,
 			@NotNull(message = "Quantity is mandatory!") @Min(value = 0, message = "Quantity can't be less than 0!") int quantity,
-			Manufacturer manufacturer) {
+			Type type, Manufacturer manufacturer) {
 		this.name = name;
-		this.type = type;
 		this.color = color;
-		this.size = size;
 		this.price = price;
 		this.quantity = quantity;
+		this.type = type;
 		this.manufacturer = manufacturer;
 	}
 
@@ -100,20 +97,6 @@ public class Product {
 	}
 
 	/**
-	 * @return String return the type
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the product_type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/**
 	 * @return String return the color
 	 */
 	public String getColor() {
@@ -125,22 +108,6 @@ public class Product {
 	 */
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	/**
-	 * @return String, return the size
-	 */
-
-	public String getSize() {
-		return size;
-	}
-
-	/**
-	 * @param size, return the size
-	 */
-
-	public void setSize(String size) {
-		this.size = size;
 	}
 
 	/**
@@ -163,6 +130,20 @@ public class Product {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	/**
+	 * @return String return the type
+	 */
+	public Type getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the product_type to set
+	 */
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	public Manufacturer getManufacturer() {

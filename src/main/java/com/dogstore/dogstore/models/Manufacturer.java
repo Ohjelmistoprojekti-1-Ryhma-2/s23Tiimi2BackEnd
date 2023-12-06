@@ -44,8 +44,7 @@ public class Manufacturer {
 
 	// Configured CascadeType to extend ALL CRUD functions performed to Manufacturer
 	// entity to apply to all associated products as well (could use .REMOVE in case
-	// of
-	// just deleting a manufacturer and all its associated Products)
+	// of just deleting a manufacturer and all its associated Products)
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "manufacturer")
 	private List<Product> products;
 

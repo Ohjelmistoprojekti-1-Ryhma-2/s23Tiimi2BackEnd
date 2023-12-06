@@ -11,9 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.dogstore.dogstore.models.Customer;
 import com.dogstore.dogstore.models.Manufacturer;
 import com.dogstore.dogstore.models.Product;
+import com.dogstore.dogstore.models.Type;
 import com.dogstore.dogstore.repository.CustomerRepository;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
+import com.dogstore.dogstore.repository.TypeRepository;
 
 @SpringBootApplication
 public class DogstoreApplication {
@@ -22,10 +24,12 @@ public class DogstoreApplication {
 	// LoggerFactory.getLogger(DogstoreApplication.class);
 	private final ManufacturerRepository manufacturerRepository;
 	private final ProductRepository productRepository;
+	private final TypeRepository typeRepository;
 	private final CustomerRepository customerRepository;
 
 	public DogstoreApplication(ManufacturerRepository manufacturerRepository, ProductRepository productRepository,
-			CustomerRepository customerRepository) {
+			TypeRepository typeRepository, CustomerRepository customerRepository) {
+		this.typeRepository = typeRepository;
 		this.manufacturerRepository = manufacturerRepository;
 		this.productRepository = productRepository;
 		this.customerRepository = customerRepository;
@@ -49,6 +53,8 @@ public class DogstoreApplication {
 	@Transactional
 	public CommandLineRunner initData() {
 		return (args) -> {
+
+			// First we create manufacturer's info.
 			Manufacturer rukka = new Manufacturer("Rukka", "Suomusjarvi 99, Finland", "EU", "+358 559 A 000",
 					"rukka@ltd.fi");
 			rukka = manufacturerRepository.save(rukka);
@@ -59,14 +65,25 @@ public class DogstoreApplication {
 					"+86 AAA BBB CCC", "littlebigger@gmail.com");
 			littlebigger = manufacturerRepository.save(littlebigger);
 
+			// Secondly we create different type info.
+
+			Type largeCloth = new Type("clothing", "L");
+			largeCloth = typeRepository.save(largeCloth);
+
+			// Afterward we add and save product info,
+			// that has also recently created manufacturer and type info.
+
+			// productRepository.save(new Product("Sadetakki", "clothing", "Keltainen", "S",
+			// 39.99, rukka));
+			productRepository.save(new Product("Talvitakki", "Musta", 64.99, largeCloth, rukka));
+			// productRepository.save(new Product("Broilerin fileelastu", "food",
+			// "Keltaruskea", "-", 6.99, purenatural));
+			// productRepository.save(new Product("Crinkle Rope köysilenkki pallolla",
+			// "toy",
+			// "Siitrunakeltainen & Jännävioletti", "-", 7.99, littlebigger));
+
+			// Lastly, we create and save Admin's personal info.
 			customerRepository.save(new Customer(null, "Admin", "Koulukatu 8", "+3580000", "admin@gmail.com"));
-
-			productRepository.save(new Product("Sadetakki", "clothing", "Keltainen", "S", 39.99, rukka));
-			productRepository.save(new Product("Talvitakki", "clothing", "Musta", "L", 64.99, rukka));
-			productRepository.save(new Product("Broilerin fileelastu", "food", "Keltaruskea", "-", 6.99, purenatural));
-			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla", "toy",
-					"Siitrunakeltainen & Jännävioletti", "-", 7.99, littlebigger));
-
 		};
 	}
 }
