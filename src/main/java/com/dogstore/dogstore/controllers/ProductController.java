@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogstore.dogstore.models.Product;
-import com.dogstore.dogstore.models.Type;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
 
@@ -32,7 +32,9 @@ public class ProductController {
 
 	// Listing of all products
 	@GetMapping("/listproducts")
-	public String home(Model model) {
+	// All PreAuthorizations disabled at the moment to ease production
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public String listProducts(Model model) {
 		model.addAttribute("products", productRepository.findAll());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
 		return "listproducts"; // listproducts.html
@@ -46,6 +48,7 @@ public class ProductController {
 
 	// Retrieving a product by its ID for editing in the editproduct.html endpoint
 	@GetMapping("/editproduct/{id}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String editProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productRepository.findById(id));
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
@@ -54,6 +57,7 @@ public class ProductController {
 
 	// Saving the retrieved and edited product into the repository.
 	@PostMapping("/saveproduct")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String saveProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
@@ -65,6 +69,7 @@ public class ProductController {
 
 	// Retrieving a product by its ID for removing
 	@GetMapping("/deleteproduct/{id}")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productRepository.findById(id));
 		productRepository.deleteById(id);
@@ -75,6 +80,7 @@ public class ProductController {
 	// which has a form for the new product.
 
 	@GetMapping("/addproduct")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String addProductForm(Model model) {
 		model.addAttribute("product", new Product());
 		model.addAttribute("manufacturers", manufacturerRepository.findAll());
@@ -87,8 +93,9 @@ public class ProductController {
 	/* TODO: Update setSize from Type entity. */
 
 	@PostMapping("/addproduct")
-	public String addProduct(@Valid @ModelAttribute Product product, Type type, BindingResult result, Model model) {
-		if (!Arrays.asList("food", "clothing", "toy").contains(type.getCategory())) {
+	// @PreAuthorize("hasAuthority('ADMIN')")
+	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		if (!Arrays.asList("food", "clothing", "toy").contains(product.getType())) {
 			result.rejectValue("type", "error.product", "Invalid product type");
 		}
 
@@ -111,6 +118,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/productsbymanufacturer")
+	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String getProductsByManufacturer(@RequestParam("manufacturerId") Long manufacturerId, Model model) {
 		List<Product> products = productRepository.findByManufacturerId(manufacturerId);
 		model.addAttribute("products", products);
