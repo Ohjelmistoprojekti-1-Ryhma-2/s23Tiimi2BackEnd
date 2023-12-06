@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogstore.dogstore.models.Product;
+import com.dogstore.dogstore.models.Type;
 import com.dogstore.dogstore.repository.ManufacturerRepository;
 import com.dogstore.dogstore.repository.ProductRepository;
 
@@ -94,8 +95,8 @@ public class ProductController {
 
 	@PostMapping("/addproduct")
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
-		if (!Arrays.asList("food", "clothing", "toy").contains(product.getType())) {
+	public String addProduct(@Valid @ModelAttribute Product product, Type type, BindingResult result, Model model) {
+		if (!Arrays.asList("food", "clothing", "toy").contains(type.getCategory())) {
 			result.rejectValue("type", "error.product", "Invalid product type");
 		}
 
