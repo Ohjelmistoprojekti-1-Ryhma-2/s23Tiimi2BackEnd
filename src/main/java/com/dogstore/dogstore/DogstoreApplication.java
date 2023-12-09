@@ -67,19 +67,18 @@ public class DogstoreApplication {
 
 			// Secondly we create different type info.
 
-			Type smallCloth = typeRepository.save(new Type("clothing", "S"));
-			Type largeCloth = typeRepository.save(new Type("clothing", "L"));
-			Type chickenFood = typeRepository.save(new Type("food", "-"));
-			Type ballToy = typeRepository.save(new Type("toy", "-"));
+			Type clothing = typeRepository.save(new Type("clothing"));
+			Type food = typeRepository.save(new Type("food"));
+			Type toy = typeRepository.save(new Type("toy"));
 
 			// Afterward we add and save product info,
 			// that has also recently created manufacturer and type info.
 
-			productRepository.save(new Product("Sadetakki", "Keltainen", 39.99, smallCloth, rukka));
-			productRepository.save(new Product("Talvitakki", "Musta", 64.99, largeCloth, rukka));
-			productRepository.save(new Product("Broilerin fileelastu", "Keltaruskea", 6.99, chickenFood, purenatural));
-			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla", "Siitrunakeltainen & Jännävioletti",
-					7.99, ballToy, littlebigger));
+			productRepository.save(new Product("Sadetakki", "Keltainen", "S",39.99, clothing, rukka));
+			productRepository.save(new Product("Talvitakki", "Musta", "L", 64.99, clothing, rukka));
+			productRepository.save(new Product("Broilerin fileelastu", "Keltaruskea", "-", 6.99, food, purenatural));
+			productRepository.save(new Product("Crinkle Rope köysilenkki pallolla",  "Siitrunakeltainen & Jännävioletti", "-",
+					7.99, toy, littlebigger));
 
 			// Lastly, we create and save Admin's personal info.
 			customerRepository.save(new Customer(null, "Admin", "Koulukatu 8", "+3580000", "admin@gmail.com"));

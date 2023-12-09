@@ -27,6 +27,9 @@ public class Product {
 	@NotBlank(message = "Color is mandatory!")
 	private String color;
 
+	@NotBlank(message = "Size is mandatory!")
+	private String size;
+	
 	@NotNull(message = "Price is mandatory!")
 	private double price;
 
@@ -47,9 +50,10 @@ public class Product {
 		// this.type = "";
 	}
 
-	public Product(String name, String color, double price, Type type, Manufacturer manufacturer) {
+	public Product(String name, String color, String size, double price, Type type, Manufacturer manufacturer) {
 		this.name = name;
 		this.color = color;
+		this.size = size;
 		this.price = price;
 		this.type = type;
 		this.manufacturer = manufacturer;
@@ -57,11 +61,13 @@ public class Product {
 
 	public Product(@NotBlank(message = "Name is mandatory!") String name,
 			@NotBlank(message = "Color is mandatory!") String color,
+			@NotBlank(message = "Size is mandatory!") String size,
 			@NotNull(message = "Price is mandatory!") double price,
 			@NotNull(message = "Quantity is mandatory!") @Min(value = 0, message = "Quantity can't be less than 0!") int quantity,
 			Type type, Manufacturer manufacturer) {
 		this.name = name;
 		this.color = color;
+		this.size = size;
 		this.price = price;
 		this.quantity = quantity;
 		this.type = type;
@@ -110,6 +116,13 @@ public class Product {
 		this.color = color;
 	}
 
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
 	/**
 	 * @return double return the price
 	 */

@@ -20,9 +20,8 @@ public class Type {
 	// Essential parameters about type.
 
 	// type, which is category of similar things,validation is in product controller
+	@NotBlank(message = "Category is mandatory")
 	private String category;
-	@NotBlank(message = "Size is mandatory")
-	private String size;
 
 	//
 
@@ -35,9 +34,8 @@ public class Type {
 		super();
 	}
 
-	public Type(String category, String size) {
+	public Type(String category) {
 		this.category = category;
-		this.size = size;
 	}
 
 	/**
@@ -66,20 +64,6 @@ public class Type {
 	 */
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	/**
-	 * @return the size
-	 */
-	public String getSize() {
-		return size;
-	}
-
-	/**
-	 * @param size the size to set
-	 */
-	public void setSize(String size) {
-		this.size = size;
 	}
 
 }

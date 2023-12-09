@@ -2,6 +2,7 @@ package com.dogstore.dogstore.controllers;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,17 +56,39 @@ public class ProductController {
 	// Retrieving a product by its ID for editing in the editproduct.html endpoint
 	@GetMapping("/editproduct/{id}")
 	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String editProduct(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("product", productRepository.findById(id));
-		model.addAttribute("types", typeRepository.findAll());
-		model.addAttribute("manufacturers", manufacturerRepository.findAll());
-		return "editproduct"; // editproduct.html
-	}
+public String editProduct(@PathVariable("id") Long id, Model model) {
+    Optional<Product> productOpt = productRepository.findById(id);
+
+    if (!productOpt.isPresent()) {
+        // Handle the case where the product is not found
+        return "redirect:/listproducts"; // or an error page
+    }
+
+    // Unwrap the Optional and add the Product object to the model
+    model.addAttribute("product", productOpt.get());
+    model.addAttribute("types", typeRepository.findAll());
+    model.addAttribute("manufacturers", manufacturerRepository.findAll());
+    return "editproduct"; // editproduct.html
+}
 
 	// Saving the retrieved and edited product into the repository.
 	@PostMapping("/saveproduct")
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String saveProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		Long typeId = product.getType().getId();
+		Optional<Type> typeOpt = typeRepository.findById(typeId);
+
+		if (typeOpt.isPresent()) {
+			product.setType(typeOpt.get());
+			// Set size logic
+			if (!"clothing".equalsIgnoreCase(typeOpt.get().getCategory())) {
+				product.setSize("-");
+			} else if (!Arrays.asList("S", "M", "L").contains(product.getSize())) {
+				result.rejectValue("size", "error.product", "Invalid size for clothing");
+			}
+		} else {
+			result.rejectValue("type", "error.product", "Invalid product type");
+		}
 		if (result.hasErrors()) {
 			model.addAttribute("types", typeRepository.findAll());
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
@@ -99,20 +122,16 @@ public class ProductController {
 	// Add and save the new product.
 	// Moves back to /listproducts -endpoint.
 
-	/* TODO: Update setSize from Type entity. */
-
 	@PostMapping("/addproduct")
-	// @PreAuthorize("hasAuthority('ADMIN')")
-	public String addProduct(@Valid @ModelAttribute Product product, Type type, BindingResult result, Model model) {
-		if (!Arrays.asList("food", "clothing", "toy").contains(type.getCategory())) {
-			result.rejectValue("type", "error.product", "Invalid product type");
-		}
+	public String addProduct(@Valid @ModelAttribute Product product, BindingResult result, Model model) {
+		Type type = product.getType();
 
 		// Set size as "-" if type is not "clothing"
-		if (!"clothing".equals(type.getCategory())) {
-			type.setSize("-");
+		if (!"clothing".equalsIgnoreCase(type.getCategory())) {
+			product.setSize("-");
 		} else {
-			if (!Arrays.asList("S", "M", "L").contains(type.getSize())) {
+			// For "clothing", ensure size is one of "S", "M", "L"
+			if (!Arrays.asList("S", "M", "L").contains(product.getSize())) {
 				result.rejectValue("size", "error.product", "Invalid size for clothing");
 			}
 		}
@@ -122,11 +141,10 @@ public class ProductController {
 			model.addAttribute("manufacturers", manufacturerRepository.findAll());
 			return "addproduct";
 		}
-		// save product
+
 		productRepository.save(product);
 		return "redirect:/listproducts";
 	}
-
 	@GetMapping("/productsbymanufacturer")
 	// @PreAuthorize("hasAuthority('ADMIN')")
 	public String getProductsByManufacturer(@RequestParam("manufacturerId") Long manufacturerId, Model model) {

@@ -6,26 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Edit Product</title>
   <link rel="stylesheet" href="/style.css" />
-  <script>
-    function updateSize() {
-      const selectedType = document.getElementById("type").value;
-      const size = document.getElementById("size");
-      const hiddenSize = document.getElementById("hiddenSize");
-      const sizeContainer = document.getElementById("size");
 
-      if (selectedType === "clothing") {
-        sizeContainer.style.display = "block";
-        size.disabled = false;
-        hiddenSize.disabled = true;
-      } else {
-        sizeContainer.style.display = "none";
-        size.disabled = true;
-        hiddenSize.disabled = false;
-      }
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function updateSize() {
+        const selectedTypeId = document.getElementById("type").value;
+        const sizeContainer = document.getElementById("size");
+        const hiddenSize = document.getElementById("hiddenSize");
+
+        if (selectedTypeId === '1') {
+            sizeContainer.style.display = "block";
+            hiddenSize.disabled = true;
+        } else {
+            sizeContainer.style.display = "none";
+            hiddenSize.disabled = false;
+            hiddenSize.value = "-";
+        }
     }
 
-    window.addEventListener("load", updateSize);
-  </script>
+    window.addEventListener("load", function() {
+        updateSize();
+        selectCurrentTypeAndSize();
+    });
+
+    function selectCurrentTypeAndSize() {
+        // Correctly use the Thymeleaf expression inside JavaScript
+        const currentTypeId = /*[[${product.type.id}]]*/ 'defaultTypeId';
+        const currentSize = /*[[${product.size}]]*/ 'defaultSize';
+        document.getElementById("type").value = currentTypeId;
+        document.getElementById("sizeSelect").value = currentSize;
+        updateSize();
+    }
+    /*]]>*/
+</script>
+
+
 </head>
 
 <body>
@@ -33,7 +48,7 @@
   <h2>Edit a Product</h2>
   <div>
     <form th:object="${product}" class="form-input" th:action="@{/saveproduct}" method="post">
-      <input type="hidden" id="id" class="error-message" th:field="*{id}" /><br />
+      <input type="hidden" id="id" th:field="*{id}" /><br />
 
       <label for="name">Name:</label><br />
       <input type="text" id="name" th:field="*{name}" />
@@ -42,42 +57,37 @@
       </p>
       <br />
       
-      <!-- This is the old form without Type enity.
-      
-      <label for="type">Type:</label><br />
-      <select id="type" th:field="*{type}" onchange="updateSize()">
-        <option value="" selected disabled>Select Type</option>
-        <option value="clothing">Clothing</option>
-        <option value="food">Food</option>
-        <option value="toy">Toy</option>
-      </select>
-      <br />
+    <label for="type">Type:</label><br />
+<select id="type" th:field="*{type}" required onchange="updateSize()">
+    <option value="">Select Type</option>
+    <option th:each="type : ${types}" 
+            th:value="${type.id}" 
+            th:text="${type.category}" 
+            th:selected="${type.id == product.type.id}">
+    </option>
+</select>
+        <br />
 
-      <div id="size">
-        <label for="size">Size:</label><br />
-        <select id="size" th:field="*{size}">
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-        </select>
-      </div>
-      
-      <p th:if="${#fields.hasErrors('size')}" class="error-message" th:errors="*{size}">
-        Size Error
-      </p>
-      <br />
-      
-      -->
+<div id="size" style="display: none">
+    <label for="sizeSelect">Size:</label><br />
+    <select id="sizeSelect" th:field="*{size}">
+        <option value="S" th:selected="${product.size == 'S'}">S</option>
+        <option value="M" th:selected="${product.size == 'M'}">M</option>
+        <option value="L" th:selected="${product.size == 'L'}">L</option>
+    </select>
+</div>
+
+        <input type="hidden" id="hiddenSize" th:field="*{size}" value="-" />
       
       <label for="color">Color:</label><br />
-      <input type="text" id="color" class="error-message" th:field="*{color}" />
+      <input type="text" id="color" th:field="*{color}" />
       <p th:if="${#fields.hasErrors('color')}" class="error-message" th:errors="*{color}">
         Color Error
       </p>
       <br />
 
       <label for="price">Price:</label><br />
-      <input type="number" id="price" class="error-message" th:field="*{price}" min="0" step="0.01" />
+      <input type="number" id="price" th:field="*{price}" min="0" step="0.01" />
       <p th:if="${#fields.hasErrors('price')}" class="error-message" th:errors="*{price}">
         Price Error
       </p>
@@ -91,7 +101,7 @@
       <br />
 
       <label for="manufacturerlist">Manufacturer:</label><br />
-      <select id="manufacturerlist" class="error-message" th:field="*{manufacturer}">
+      <select id="manufacturerlist" th:field="*{manufacturer}" required>
         <option value="">Select a manufacturer</option>
         <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}">
         </option>

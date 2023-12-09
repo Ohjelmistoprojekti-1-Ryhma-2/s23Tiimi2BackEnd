@@ -6,24 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Add Product</title>
   <link rel="stylesheet" href="/style.css" />
-  <script>
-    function updateSize() {
-      const selectedType = document.getElementById("type").value;
-      const size = document.getElementById("size");
-      const hiddenSize = document.getElementById("hiddenSize");
-      const sizeContainer = document.getElementById("size");
+    <script>
+        function updateSize() {
+            const selectedTypeId = document.getElementById("type").value;
+            const sizeContainer = document.getElementById("size");
+            const hiddenSize = document.getElementById("hiddenSize");
 
-      if (selectedType === "clothing") {
-        sizeContainer.style.display = "block";
-        size.disabled = false;
-        hiddenSize.disabled = true;
-      } else {
-        sizeContainer.style.display = "none";
-        size.disabled = true;
-        hiddenSize.disabled = false;
-      }
-    }
-  </script>
+            if (selectedTypeId === '1') { // Check if the selected type is 'clothing'
+                sizeContainer.style.display = "block";
+                hiddenSize.disabled = true;
+            } else {
+                sizeContainer.style.display = "none";
+                hiddenSize.disabled = false;
+                hiddenSize.value = "-";
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -109,7 +107,25 @@
       <br />
       
       -->
-      
+
+            <label for="type">Type:</label><br />
+            <select id="type" th:field="*{type}" required onchange="updateSize()">
+                <option value="">Select Type</option>
+                <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.category}"></option>
+            </select>
+            <br />
+
+            <div id="size" style="display: none">
+                <label for="sizeSelect">Size:</label><br />
+                <select id="sizeSelect" th:field="*{size}">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                </select>
+            </div>
+            <input type="hidden" id="hiddenSize" th:field="*{size}" value="-" />
+
+
       <label for="color">Color:</label><br />
       <input type="text" id="color" th:field="*{color}" />
       <p th:if="${#fields.hasErrors('color')}" class="error-message" th:errors="*{color}">
